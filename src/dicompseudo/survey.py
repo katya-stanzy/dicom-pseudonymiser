@@ -13,6 +13,7 @@ from .config import Config
 from .engine import Pseudonymiser, tag_str
 from .io import is_dicom, iter_files, participant_for
 from .mapping import Mapping
+from .pixels import find_template
 from .rules import rule_for
 
 
@@ -78,5 +79,6 @@ def survey(cfg: Config, mapping: Mapping | None) -> Survey:
                str(ds.get("ManufacturerModelName", "")),
                f"{ds.get('Rows', '?')}x{ds.get('Columns', '?')}",
                str(ds.get("BurnedInAnnotation", "") or "-"))
-        s.devices[" | ".join(sig)] += 1
+        tpl = find_template(ds, cfg.pixel_masks)
+        s.devices[" | ".join(sig) + f"  -> {('mask: ' + tpl.name) if tpl else 'no mask'}"] += 1
     return s

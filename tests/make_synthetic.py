@@ -84,3 +84,16 @@ def synthetic_dataset(modality: str = "MR") -> Dataset:
     ds.add_new(0x60000010, "US", 4)          # OverlayRows
     ds.add_new(0x60004000, "LT", "overlay comment fake")
     return ds
+
+
+def with_pixels(ds: Dataset, *, rows: int = 64, cols: int = 80, frames: int = 1,
+                colour: bool = False, text_rows: int = 10) -> Dataset:
+    """Add 8-bit pixel data: background 100, a fake 'burned-in text' band of 255 at the top."""
+    import numpy as np
+    shape = (rows, cols, 3) if colour else (rows, cols)
+    frame = np.full(shape, 100, dtype=np.uint8)
+    frame[:text_rows] = 255
+    arr = np.stack([frame] * frames) if frames > 1 else frame
+    ds.Rows, ds.Columns = rows, cols
+    ds.set_pixel_data(arr, "RGB" if colour else "MONOCHROME2", 8, generate_instance_uid=False)
+    return ds

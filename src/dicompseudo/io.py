@@ -24,6 +24,7 @@ from pydicom.errors import InvalidDicomError
 from .config import Config, ConfigError
 from .engine import Pseudonymiser
 from .mapping import Mapping, Participant
+from .pixels import MaskError, apply_mask, find_template
 
 STAGING = ".dicompseudo_staging"
 
@@ -81,7 +82,8 @@ class FileResult:
     experimental_number: str = ""
     target_rel: str = ""
     staged: str = ""
-    burned_in: str = ""
+    burned_in: str = ""               # no | possible | yes | masked
+    mask: str = ""                    # name of the template applied
     error_type: str = ""
     actions: Counter = field(default_factory=Counter)
 
@@ -107,16 +109,24 @@ def process_one(path_str: str, input_dir: str, staging: str, cfg: Config,
         res.experimental_number = p.experimental_number
         eng = Pseudonymiser(cfg)
         res.burned_in = eng.burned_in_status(ds)
-        if res.burned_in != "no" and cfg.on_burned_in_annotation == "skip":
+        template = find_template(ds, cfg.pixel_masks)     # matched on the original header
+        if template is None and res.burned_in != "no" and cfg.on_burned_in_annotation == "skip":
             res.status = "skipped_burned_in"
             return res
         rep = eng.process(ds, p)
         res.actions = rep.actions
+        if template is not None:
+            apply_mask(ds, template)
+            res.mask = template.name
+            res.burned_in = "masked"
         res.target_rel = output_relpath(ds, p).as_posix()
         staged = Path(staging) / f"{uuid.uuid4().hex}.dcm"
         ds.save_as(staged, enforce_file_format=True)
         res.staged = str(staged)
         res.status = "written"
+    except MaskError:
+        res.status = "error"
+        res.error_type = "MaskError (pixel libraries missing)"
     except (InvalidDicomError, Exception) as e:   # never report the message: may hold values
         res.status = "error"
         res.error_type = type(e).__name__
@@ -131,6 +141,7 @@ class RunResult:
     actions: Counter
     burned_in: Counter
     per_participant: Counter
+    masks: Counter
 
 
 def _place(res: FileResult, out: Path, claimed: set[str], overwrite: bool) -> None:
@@ -191,10 +202,12 @@ def run(cfg: Config, mapping: Mapping, progress=None) -> RunResult:
         shutil.rmtree(staging, ignore_errors=True)
 
     results.sort(key=lambda r: r.input_rel)
-    actions, burned, per_p = Counter(), Counter(), Counter()
+    actions, burned, per_p, masks = Counter(), Counter(), Counter(), Counter()
     for r in results:
         actions.update(r.actions)
         if r.status == "written":
             per_p[r.experimental_number] += 1
             burned[r.burned_in] += 1
-    return RunResult(results, Counter(r.status for r in results), actions, burned, per_p)
+            if r.mask:
+                masks[r.mask] += 1
+    return RunResult(results, Counter(r.status for r in results), actions, burned, per_p, masks)

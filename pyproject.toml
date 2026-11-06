@@ -12,7 +12,8 @@ authors = [{ name = "Katya Stansfield" }]
 dependencies = ["pydicom>=3.0"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+pixels = ["numpy>=1.26", "pillow>=10", "pylibjpeg>=2", "pylibjpeg-libjpeg", "pylibjpeg-openjpeg"]
+dev = ["pytest>=8", "numpy>=1.26", "pillow>=10"]
 
 [project.scripts]
 dicompseudo = "dicompseudo.cli:main"

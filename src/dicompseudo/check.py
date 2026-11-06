@@ -22,6 +22,7 @@ from .config import Config
 from .engine import DUMMY, TAG_PATIENT_ID, TAG_PATIENT_NAME, Pseudonymiser, tag_str
 from .io import is_dicom, iter_files
 from .mapping import Mapping
+from .pixels import find_template, rectangles_are_black
 from .rules import resolve_action, rule_for
 
 TEXT_VRS = {"AE", "AS", "CS", "DA", "DS", "DT", "IS", "LO", "LT", "PN", "SH", "ST", "TM",
@@ -77,6 +78,7 @@ class Checker:
     def __init__(self, cfg: Config | None = None, mapping: Mapping | None = None,
                  terms: list[str] | None = None):
         self.cfg = cfg or Config()
+        self._pending_pixel_check = None
         self.mapping = mapping
         self.allowed: set[str] = set()
         self.keys: list[tuple[int, str]] = []
@@ -179,9 +181,14 @@ class Checker:
                 leaks.add(f"terms line {i}: found in output path")
         if str(ds.get("PatientIdentityRemoved", "")) != "YES":
             leaks.add("(0012,0062) PatientIdentityRemoved is not YES")
-        b = Pseudonymiser.burned_in_status(ds)
-        if b != "no":
-            warns.add(f"burned-in annotation {b} (pixel text not checked; see phase 2)")
+        template = find_template(ds, self.cfg.pixel_masks)
+        if template is not None:
+            self._pending_pixel_check = template
+        else:
+            b = Pseudonymiser.burned_in_status(ds)
+            if b != "no":
+                warns.add(f"burned-in annotation {b}, no mask template matches "
+                          f"(see dicompseudo preview)")
         return leaks, warns
 
     def run(self, folder: Path) -> CheckResult:
@@ -197,7 +204,15 @@ class Checker:
             except Exception as e:
                 res.warnings[f"unreadable DICOM ({type(e).__name__})"] += 1
                 continue
+            self._pending_pixel_check = None
             leaks, warns = self.check_dataset(ds, path.relative_to(folder).as_posix())
+            tpl = self._pending_pixel_check
+            if tpl is not None:
+                try:
+                    if not rectangles_are_black(dcmread(path), tpl):
+                        leaks.add(f"pixel mask '{tpl.name}' not applied (rectangle not black)")
+                except ImportError:
+                    warns.add("pixel masks not verified (numpy not installed)")
             res.leaks.update(leaks)
             res.warnings.update(warns)
         return res

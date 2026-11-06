@@ -6,6 +6,7 @@ never DICOM values or original paths.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 
@@ -106,6 +107,8 @@ def cmd_run(args) -> int:
     _table("Files by status:", rr.status_counts)
     _table("Files written per participant:", rr.per_participant)
     _table("Burned-in annotation (written files):", rr.burned_in)
+    if rr.masks:
+        _table("Pixel mask templates applied (files):", rr.masks)
     print(f"\naudit summary: {summary}\naudit files  : {files}  (private)")
     if rr.burned_in.get("yes") or rr.burned_in.get("possible"):
         print("NOTE: some written files may have text burned into the pixels; "
@@ -113,6 +116,28 @@ def cmd_run(args) -> int:
     print(f"\nnext: dicompseudo check \"{cfg.output_dir}\" --config {args.config} "
           f"--mapping \"{cfg.mapping_file}\" [--terms <private words file>]")
     return 1 if rr.status_counts.get("error") else 0
+
+
+def cmd_preview(args) -> int:
+    from .preview import build
+    try:
+        cfg, _ = _load(args, need_salt=False)
+        cfg.check_paths()
+    except (ConfigError, MappingError) as e:
+        return _err(e)
+    try:
+        out, summary = build(cfg, args.n, args.all)
+    except ImportError:
+        return _err("preview needs numpy and pillow: conda env update -f environment.yml")
+    print("Device signatures previewed:")
+    if not summary:
+        print("  (none: no file may carry burned-in text; use --all to preview every device)")
+    for s in summary:
+        print(f"  sig{s['index']:02d}  {s['files']:>6} files  burned-in: {','.join(s['burned_in']):<14}"
+              f" template: {s['template'] or 'NONE'}  {json.dumps(s['signature'])}")
+    print(f"\npreview (PRIVATE, shows original pixels): {out / 'index.html'}")
+    print(f"template skeleton for devices without one : {out / 'pixel_masks_skeleton.json'}")
+    return 0
 
 
 def cmd_check(args) -> int:
@@ -157,6 +182,12 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("run", help="pseudonymise input_dir into output_dir")
     sp.add_argument("--config", default="environment.json")
     sp.set_defaults(func=cmd_run)
+
+    sp = sub.add_parser("preview", help="private before/after images for drawing pixel masks")
+    sp.add_argument("--config", default="environment.json")
+    sp.add_argument("--n", type=int, default=3, help="sample images per device (default 3)")
+    sp.add_argument("--all", action="store_true", help="preview every device, not only risky ones")
+    sp.set_defaults(func=cmd_preview)
 
     sp = sub.add_parser("check", help="leak scan of a pseudonymised folder")
     sp.add_argument("output_dir")

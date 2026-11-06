@@ -6,5 +6,10 @@ dependencies:
   - pip
   - pip:
       - pydicom>=3.0
+      - numpy>=1.26             # phase 2: pixel masking
+      - pillow>=10              # phase 2: preview images, JPEG baseline decoding
+      - pylibjpeg>=2            # phase 2: decoding compressed images
+      - pylibjpeg-libjpeg       #   JPEG lossless / extended (GPL-3.0, fine for in-house use)
+      - pylibjpeg-openjpeg      #   JPEG 2000
       - pytest>=8
       - -e .

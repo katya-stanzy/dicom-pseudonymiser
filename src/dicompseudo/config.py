@@ -57,6 +57,7 @@ class Config:
     keep_tags: list[int] = field(default_factory=list)
     extra_remove_tags: list[int] = field(default_factory=list)
     on_burned_in_annotation: str = "flag"
+    pixel_masks: list = field(default_factory=list)   # list[pixels.MaskTemplate]
     workers: int = 4
     overwrite: bool = False
     salt: str | None = None
@@ -108,7 +109,7 @@ def from_dict(d: dict, *, require_paths: bool = True, salt: str | None = None) -
         raise ConfigError("environment.json must contain a JSON object")
     known = {"input_dir", "output_dir", "mapping_file", "audit_dir", "match_participant_by", "replace",
              "categories", "dates", "uids", "free_text", "keep_tags", "extra_remove_tags",
-             "on_burned_in_annotation", "workers", "overwrite"}
+             "on_burned_in_annotation", "pixel_masks", "workers", "overwrite"}
     unknown = set(d) - known
     if unknown:
         raise ConfigError(f"unknown setting(s): {sorted(unknown)}")
@@ -161,6 +162,12 @@ def from_dict(d: dict, *, require_paths: bool = True, salt: str | None = None) -
     if both:
         raise ConfigError("tag(s) listed in both keep_tags and extra_remove_tags: "
                           + ", ".join(f"({t >> 16:04X},{t & 0xFFFF:04X})" for t in sorted(both)))
+
+    from .pixels import MaskError, parse_templates
+    try:
+        cfg.pixel_masks = parse_templates(d.get("pixel_masks", []))
+    except MaskError as e:
+        raise ConfigError(str(e)) from None
 
     w = d.get("workers", 4)
     if not isinstance(w, int) or w < 1:

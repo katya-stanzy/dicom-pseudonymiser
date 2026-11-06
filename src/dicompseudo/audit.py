@@ -28,6 +28,8 @@ def config_summary(cfg: Config) -> dict:
         d[k] = str(d[k]) if d[k] else None
     d["keep_tags"] = [f"({t >> 16:04X},{t & 0xFFFF:04X})" for t in cfg.keep_tags]
     d["extra_remove_tags"] = [f"({t >> 16:04X},{t & 0xFFFF:04X})" for t in cfg.extra_remove_tags]
+    d["pixel_masks"] = [{"name": t.name, "match": t.match, "rectangles": [list(r) for r in t.rectangles],
+                         "clears_burned_in": t.clears_burned_in} for t in cfg.pixel_masks]
     return d
 
 
@@ -47,6 +49,7 @@ def write(cfg: Config, rr: RunResult) -> tuple[Path, Path]:
         "status_counts": dict(rr.status_counts),
         "files_per_participant": dict(sorted(rr.per_participant.items())),
         "burned_in": dict(rr.burned_in),
+        "pixel_masks_applied": dict(rr.masks),
         "actions": {f"{c} {a}": n for (c, a), n in sorted(rr.actions.items())},
         "error_types": dict(sorted(
             {r.error_type: sum(1 for x in rr.results if x.error_type == r.error_type)
@@ -56,8 +59,8 @@ def write(cfg: Config, rr: RunResult) -> tuple[Path, Path]:
     with files.open("w", newline="", encoding="utf8") as f:
         w = csv.writer(f)
         w.writerow(["input_relpath", "experimental_number", "output_relpath", "status",
-                    "burned_in", "error_type"])
+                    "burned_in", "mask", "error_type"])
         for r in rr.results:
             w.writerow([r.input_rel, r.experimental_number, r.target_rel, r.status,
-                        r.burned_in, r.error_type])
+                        r.burned_in, r.mask, r.error_type])
     return summary, files

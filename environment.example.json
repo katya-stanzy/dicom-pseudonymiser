@@ -31,6 +31,7 @@
   "keep_tags": [],
   "extra_remove_tags": [],
   "on_burned_in_annotation": "flag",
+  "pixel_masks": [],
   "workers": 4,
   "overwrite": false
 }

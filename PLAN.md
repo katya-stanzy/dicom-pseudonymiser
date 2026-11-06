@@ -132,7 +132,17 @@ dicom-pseudonymiser/
 | 6 ✅ | Add `check.py` and `audit.py` | `check` finds deliberately planted leaks in the synthetic data |
 | 7 | Dry run on real data, run locally by Katya: `inspect`, then `run`, then `check` | `check` reports 0 leaks, and spot checks in Slicer still load correctly |
 | 8 | Write the README with a quick start | a colleague can run it from the README alone |
-| Phase 2 | Pixel masking for burned-in text (per-modality regions), an optional GUI | — |
+| Phase 2 ✅ | Pixel masking for burned-in text: device templates, `preview` contact sheet, masked rewrite, `check` verifies masks | synthetic masks verified by tests |
+| Phase 2b | Optional OCR suggestions (Tesseract) for unmatched images · optional GUI · defacing only if head scans are ever included | — |
+
+## 6b. Phase 2: text burned into the pixels (implemented)
+
+- **Templates** in `environment.json` → `pixel_masks`. Each one has a `name`, a `match` on technical header values (Modality, Manufacturer, ManufacturerModelName, Rows, Columns, SoftwareVersions, SOPClassUID, ImageType), and `rectangles` given as `[x, y, width, height]` in pixels from the top-left. The first matching template wins.
+- **Masking** fills every rectangle with black in every frame (MONOCHROME1: maximum value). It runs after the header has been processed, matched on the original header. Compressed images are decoded and rewritten uncompressed. The file then gets `BurnedInAnnotation = NO` (unless `clears_burned_in: false`) and the DICOM code 113101 "Clean Pixel Data Option".
+- **`on_burned_in_annotation`** (`flag` / `skip` / `allow`) now applies only to files that **no** template matches.
+- **`dicompseudo preview`** writes a private contact sheet (`audit_dir/preview/index.html`). For each device it shows the original with the rectangles in red next to the masked result, at the same brightness scale. It also writes `pixel_masks_skeleton.json` with one empty template per device that has none. The images show original pixels, so they stay in the private audit folder.
+- **`dicompseudo check --config`** re-reads the pixels of every file that matches a template and reports a LEAK if a rectangle is not black.
+- **Not automatic:** the tool never guesses where text is. A person draws the rectangles after looking at the preview.
 
 ## 7. What happens to the old scripts
 
