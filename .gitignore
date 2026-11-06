@@ -31,3 +31,11 @@ dist/
 venv/
 .pytest_cache/
 .coverage
+
+# ---- Safety net: tool folders and private files if pointed into the repo ----
+*audit*/
+*_files.csv
+terms*.txt
+input/
+output/
+*.png

@@ -16,62 +16,119 @@ If `conda activate` doesn't work in PowerShell, run `conda init powershell` once
 
 ## Quick start: first run in PowerShell
 
-1. **Test on a copy:** copy 2–3 participants' folders to, e.g., `D:\dicom_test\input\`. Create `D:\dicom_test\keys\participants.csv`, where `source_key` must equal each folder name exactly.
-2. **Settings:** run `copy environment.example.json environment.json`, then `notepad environment.json`. Set `input_dir`, `output_dir`, `mapping_file` and `audit_dir`, using **forward slashes** (`D:/dicom_test/input`) or doubled backslashes. Set `"workers": 1` for the first run. `environment.json` is git-ignored.
-3. **Salt (if needed):** run `$env:DICOMPSEUDO_SALT = "long-random-phrase"`. It is needed only for `"uids": "regenerate"` (the default), or for `"dates": "shift"` when a participant has no `date_shift_days` in the CSV (see [Dates, birth dates and the salt](#dates-birth-dates-and-the-salt)). `dicompseudo validate` tells you whether it is needed. Set it in **every new window**, because it is lost when the window closes. Use the **same salt every time** for the same study: with a different salt, dates shift differently and UIDs no longer link up across runs. Store it privately with the key file.
-4. **Run, in order:**
+Work through the chapters in order. Test on a **copy** of 2–3 participants first, never on the only copy of your data.
+
+### 1. Create the folder layout
+
+Make one study folder with three folders side by side, for example `D:\dicom_test\`:
+
+```
+D:\dicom_test\
+├── input\                 copy of the original DICOM data
+│   ├── <folder A>\…       one folder per participant, any name, any depth below it
+│   └── <folder B>\…
+├── output\                created by `run`; this is the only folder you share
+└── keys\                  PRIVATE: never share, never put inside input\ or output\
+    ├── participants.csv   the key (you create it, see below)
+    ├── terms.txt          optional: private words that must not appear in the output
+    └── dicompseudo_audit\ created automatically (audit log, previews)
+```
+
+```powershell
+mkdir D:\dicom_test\input, D:\dicom_test\keys
+```
+
+Copy the participants' folders into `input\`. Nothing should sit directly in `input\` (loose files are skipped as unmatched), and `keys\` must not be inside it.
+
+Then create `keys\participants.csv`, for example with `notepad D:\dicom_test\keys\participants.csv`:
+
+```
+source_key,experimental_number,nickname,date_shift_days
+Erika_Testperson,JRF001,Owl,0
+003,JRF003,Fox,-412
+```
+
+- `source_key` must be **exactly** the participant's folder name inside `input\`: same characters, same case, same leading zeros. If it differs, all of that participant's files end up `unmatched`.
+- `experimental_number` and `nickname` replace PatientID and PatientName, and `experimental_number` also names the participant's output folder.
+- `date_shift_days` is optional; see [Dates, birth dates and the salt](#dates-birth-dates-and-the-salt).
+- If your folders aren't organised by participant, use the original PatientID as `source_key` and set `"match_participant_by": "PatientID"` in chapter 2.
+
+### 2. Go to the tool and create `environment.json`
 
 ```powershell
 conda activate dicompseudo
 cd C:\Users\User\OneDrive\Documents\WORK\dicom-pseudonymiser
-$env:DICOMPSEUDO_SALT = "<your salt>"
-dicompseudo validate                 # must end with OK
-dicompseudo inspect --tags
-dicompseudo preview                  # only if inspect reports possible/yes burned-in files
+copy environment.example.json environment.json
+notepad environment.json
+```
+
+Point the four paths at the folders from chapter 1, using **forward slashes** (or doubled backslashes):
+
+```json
+"input_dir":    "D:/dicom_test/input",
+"output_dir":   "D:/dicom_test/output",
+"mapping_file": "D:/dicom_test/keys/participants.csv",
+"audit_dir":    "D:/dicom_test/keys/dicompseudo_audit",
+```
+
+Set `"workers": 1` for the first run. Leave the other settings at their defaults for now; the chapters further down explain them. `environment.json` is git-ignored, so your paths stay out of the repository.
+
+### 3. Set the salt
+
+```powershell
+$env:DICOMPSEUDO_SALT = "long-random-phrase"
+```
+
+The salt is needed for `"uids": "regenerate"` (the default) and for `"dates": "shift"` when a participant has no `date_shift_days` in the CSV. `validate` tells you whether it is needed.
+
+- Set it again in **every new PowerShell window**, because it is lost when the window closes.
+- Use the **same salt every time** for the same study. With a different salt, dates shift differently and UIDs no longer link up across runs.
+- Store it privately, alongside the key file.
+
+### 4. Test: validate, inspect, preview
+
+None of these commands writes any DICOM output.
+
+```powershell
+dicompseudo validate          # checks settings, paths, mapping and salt; must end with OK
+dicompseudo inspect --tags    # counts of sensitive data in the input, and matched/unmatched files
+dicompseudo preview           # only if inspect reports burned-in text "yes" or "possible"
+```
+
+- `validate`: fix every error it reports before going on.
+- `inspect`: check `unmatched: 0`. If it isn't 0, a folder name differs from its `source_key` (chapter 1).
+- `preview`: afterwards, open `keys\dicompseudo_audit\preview\index.html` in a browser. It shows images only for files that may have text burned into the image, so an empty page means there is nothing to mask. See [Text burned into the pixels](#text-burned-into-the-pixels-ultrasound-screenshots).
+
+### 5. Run and check
+
+```powershell
 dicompseudo run
 dicompseudo check D:\dicom_test\output --config environment.json --mapping D:\dicom_test\keys\participants.csv --terms D:\dicom_test\keys\terms.txt
 ```
 
-5. **What to look for:**
-   - `run`: mostly `written`. `unmatched` means a folder name is not in the CSV.
-   - `check`: should end with `RESULT: OK, no leaks found`.
-   - Open a few output files in Slicer to confirm they still load and look right.
+`--terms` is optional. It takes a private text file with one word per line: real names, birth dates, the lab's name, the town and so on. `check` reports where a term was found by its line number, never the word itself.
+
+**What to look for:**
+
+- `run`: every file `written`. `unmatched` means a folder name is not in the CSV; `not_dicom` usually means non-DICOM files sit in `input\`.
+- `check`: must end with `RESULT: OK, no leaks found`.
+- Open a few output files in Slicer to confirm they still load and look right.
+
+When you share data, share only `output\`, never the whole study folder, because it contains `keys\`.
 
 The console output of these commands holds counts, tag names and pseudonymous paths only, so it is safe to share when asking for help. The preview images and the audit `_files.csv` are not.
 
-## Folder layout
+## Command reference
 
-```
-input_dir/                 one folder per participant, any name; that name is the source_key
-├── <folder A>/…/IM0001    any depth and file names below it
-└── <folder B>/…
-keys/                      keep OUTSIDE input_dir and output_dir
-├── participants.csv       source_key,experimental_number,nickname[,date_shift_days]
-└── dicompseudo_audit/     created automatically (private: audit log, previews)
-```
+| Command | What it does |
+|---|---|
+| `dicompseudo validate` | checks settings, paths, mapping and whether the salt is needed |
+| `dicompseudo inspect --tags` | what sensitive data is in the input (counts only) |
+| `dicompseudo preview [--all]` | private images for drawing pixel masks |
+| `dicompseudo run` | writes `output_dir`, plus the audit log in `audit_dir` |
+| `dicompseudo check <output_dir> --config environment.json --mapping <participants.csv> [--terms <words.txt>]` | leak check of the output |
 
-The folder name doesn't need to contain the experimental number: the number and nickname come from the CSV. Files directly inside `input_dir` are skipped as unmatched. If your folders aren't organised by participant, set `"match_participant_by": "PatientID"`.
-
-## Use
-
-1. Copy `environment.example.json` to `environment.json` and edit it.
-2. Create `participants.csv` **outside this repository**, with the columns
-   `source_key,experimental_number,nickname[,date_shift_days]`.
-   `source_key` is the participant's folder name inside `input_dir` (or their original PatientID if `"match_participant_by": "PatientID"`).
-3. If needed, set the secret salt. It is needed for UID regeneration, and for date shifts that are not given in the CSV:
-   - PowerShell: `$env:DICOMPSEUDO_SALT = "long-random-secret"`
-   - bash: `export DICOMPSEUDO_SALT=long-random-secret`
-4. Run:
-
-```bash
-dicompseudo validate                 # settings + mapping
-dicompseudo inspect --tags           # what sensitive data is in the input (counts only)
-dicompseudo preview                  # private images for drawing pixel masks (if needed)
-dicompseudo run                      # writes output_dir + audit log in audit_dir
-dicompseudo check <output_dir> --config environment.json --mapping <participants.csv> --terms <words.txt>
-```
-
-`--terms` takes a private text file with one word per line: real names, the lab's name, the town and so on. `check` reports where a term was found by its line number, never the word itself.
+In bash, set the salt with `export DICOMPSEUDO_SALT=long-random-phrase`.
 
 ## Dates, birth dates and the salt
 
@@ -124,6 +181,8 @@ The output is **pseudonymised**, not anonymised: while the key exists, it is sti
 Header editing cannot remove names or dates printed *into the image*. For these files, define mask templates:
 
 1. Run `dicompseudo preview`, then open `<audit_dir>/preview/index.html`. It is **private**, because it shows the original pixels. Every device that may carry burned-in text is listed with sample images and its image size.
+
+   > **Note:** images are shown only for files that may have text burned into the image (BurnedInAnnotation "yes" or "possible"), or for devices that already match one of your `pixel_masks` templates. If no file qualifies, `index.html` contains only the heading and no pictures. That is expected, not an error. To see sample images for every device anyway, run `dicompseudo preview --all`.
 2. Copy the entries you need from `<audit_dir>/preview/pixel_masks_skeleton.json` into `"pixel_masks"` in `environment.json`. Fill in the rectangles as `[x, y, width, height]` in pixels from the top-left corner, for example:
 
 ```json
