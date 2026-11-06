@@ -4,10 +4,40 @@ Configurable pseudonymisation of DICOM files, based on the DICOM standard's conf
 
 ## Set up (once)
 
-```bash
-conda env create -f environment.yml
+```powershell
+cd C:\Users\User\OneDrive\Documents\WORK\dicom-pseudonymiser
+conda env create -f environment.yml      # first time
+conda env update -f environment.yml      # after pulling changes (e.g. phase 2 image libraries)
 conda activate dicompseudo
+dicompseudo --version                    # should print: dicompseudo 0.1.0
 ```
+
+If `conda activate` doesn't work in PowerShell, run `conda init powershell` once and reopen the window, or use the Anaconda Prompt.
+
+## Quick start: first run in PowerShell
+
+1. **Test on a copy:** copy 2–3 participants' folders to, e.g., `D:\dicom_test\input\`. Create `D:\dicom_test\keys\participants.csv`, where `source_key` must equal each folder name exactly.
+2. **Settings:** run `copy environment.example.json environment.json`, then `notepad environment.json`. Set `input_dir`, `output_dir`, `mapping_file` and `audit_dir`, using **forward slashes** (`D:/dicom_test/input`) or doubled backslashes. Set `"workers": 1` for the first run. `environment.json` is git-ignored.
+3. **Salt:** run `$env:DICOMPSEUDO_SALT = "long-random-phrase"`. Do this in **every new window**, because it is lost when the window closes. Use the **same salt every time** for the same study: with a different salt, dates shift differently and UIDs no longer link up across runs. Store it privately with the key file.
+4. **Run, in order:**
+
+```powershell
+conda activate dicompseudo
+cd C:\Users\User\OneDrive\Documents\WORK\dicom-pseudonymiser
+$env:DICOMPSEUDO_SALT = "<your salt>"
+dicompseudo validate                 # must end with OK
+dicompseudo inspect --tags
+dicompseudo preview                  # only if inspect reports possible/yes burned-in files
+dicompseudo run
+dicompseudo check D:\dicom_test\output --config environment.json --mapping D:\dicom_test\keys\participants.csv --terms D:\dicom_test\keys\terms.txt
+```
+
+5. **What to look for:**
+   - `run`: mostly `written`. `unmatched` means a folder name is not in the CSV.
+   - `check`: should end with `RESULT: OK, no leaks found`.
+   - Open a few output files in Slicer to confirm they still load and look right.
+
+The console output of these commands holds counts, tag names and pseudonymous paths only, so it is safe to share when asking for help. The preview images and the audit `_files.csv` are not.
 
 ## Folder layout
 
