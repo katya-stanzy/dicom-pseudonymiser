@@ -1,0 +1,35 @@
+{
+  "source_url": "https://dicom.nema.org/medical/dicom/current/output/chtml/part15/chapter_E.html",
+  "edition": "2026d",
+  "table": "E.1-1",
+  "n_rows": 664,
+  "added_keywords": [
+    "IssuerOfPatientIDQualifiersSequence",
+    "PatientBirthDateInAlternativeCalendar",
+    "PatientDeathDateInAlternativeCalendar",
+    "PatientAlternativeCalendar",
+    "PatientBodyMassIndex",
+    "PatientSizeCodeSequence",
+    "MeasuredAPDimension",
+    "MeasuredLateralDimension"
+  ],
+  "category_counts": {
+    "age": 6,
+    "body_measurements": 6,
+    "contact": 7,
+    "curves_overlays": 3,
+    "dates": 157,
+    "device": 57,
+    "free_text": 133,
+    "graphics": 1,
+    "identifiers": 11,
+    "identity": 15,
+    "institution": 10,
+    "medical_social": 20,
+    "other": 142,
+    "sex": 2,
+    "staff": 30,
+    "structured_content": 4,
+    "uids": 60
+  }
+}

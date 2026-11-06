@@ -27,7 +27,8 @@ DICOM fields are standardised. The rule table is built from **DICOM PS3.15 Annex
 | `body_measurements` | PatientSize = height (0010,1020) · PatientWeight (0010,1030) · PatientBodyMassIndex (0010,1022) | remove |
 | `contact` | PatientAddress (0010,1040) · PatientTelephoneNumbers (0010,2154) · CountryOfResidence (0010,2150) · RegionOfResidence (0010,2152) | remove |
 | `medical_social` | EthnicGroup (0010,2160) · Occupation (0010,2180) · AdditionalPatientHistory (0010,21B0) · PatientComments (0010,4000) · MedicalAlerts (0010,2000) · Allergies (0010,2110) · PregnancyStatus (0010,21C0) · SmokingStatus (0010,21A0) · PatientReligiousPreference (0010,21F0) | remove |
-| `institution` | InstitutionName (0008,0080) · InstitutionAddress (0008,0081) · InstitutionalDepartmentName (0008,1040) · InstitutionCodeSequence (0008,0082) · StationName (0008,1010) · DeviceSerialNumber (0018,1000) | remove |
+| `institution` | InstitutionName (0008,0080) · InstitutionAddress (0008,0081) · InstitutionalDepartmentName (0008,1040) · InstitutionCodeSequence (0008,0082) | remove |
+| `device` | StationName (0008,1010) · DeviceSerialNumber (0018,1000) · other device identifiers (PS3.15 "Retain Device Identity") | remove |
 | `staff` | ReferringPhysicianName (0008,0090) · PerformingPhysicianName (0008,1050) · OperatorsName (0008,1070) · NameOfPhysiciansReadingStudy (0008,1060) · PhysiciansOfRecord (0008,1048) · RequestingPhysician (0032,1032) | remove |
 | `all_person_names` | **any** element with VR = PN that is not already covered (this keeps the behaviour of the old `PN_callback`) | blank |
 | `dates` | StudyDate, SeriesDate, AcquisitionDate, ContentDate and their times | `keep` \| `remove` \| `year_only` \| `shift` (fixed offset per participant, so intervals are preserved) |
@@ -36,6 +37,8 @@ DICOM fields are standardised. The rule table is built from **DICOM PS3.15 Annex
 | `free_text` | StudyDescription · SeriesDescription · ImageComments · ProtocolName | `keep` \| `remove` (these can contain names) |
 | `private_tags` | all odd-group (vendor) tags | remove |
 | `curves_overlays` | groups 50xx (curves) and 60xx (overlays, which may contain burned-in text) | remove |
+| `graphics` · `structured_content` | graphic annotations · SR content sequences (PS3.15 "Clean Graphics" / "Clean Structured Content") | remove |
+| *(not switchable)* `other` | clinical-trial IDs, GPS, pronouns and gender identity, digital signatures, … (142 attributes) | always the Basic Profile action; override single tags with `keep_tags` |
 
 After processing, the tool sets `PatientIdentityRemoved = YES` (0012,0062) and records the method in `DeidentificationMethod` (0012,0063) and `DeidentificationMethodCodeSequence` (0012,0064).
 
@@ -57,8 +60,9 @@ See `environment.example.json`. Copy it to `environment.json`, which git ignores
   "replace": { "PatientName": "nickname", "PatientID": "experimental_number" },
   "categories": {
     "identity": true, "age": true, "sex": true, "body_measurements": true,
-    "contact": true, "medical_social": true, "institution": true, "staff": true,
-    "all_person_names": true, "identifiers": true,
+    "contact": true, "medical_social": true, "institution": true, "device": true,
+    "staff": true, "all_person_names": true, "identifiers": true,
+    "structured_content": true, "graphics": true,
     "private_tags": true, "curves_overlays": true
   },
   "dates": "shift",            // keep | remove | year_only | shift

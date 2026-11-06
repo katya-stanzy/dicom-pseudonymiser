@@ -15,9 +15,12 @@
     "contact": true,
     "medical_social": true,
     "institution": true,
+    "device": true,
     "staff": true,
     "all_person_names": true,
     "identifiers": true,
+    "structured_content": true,
+    "graphics": true,
     "private_tags": true,
     "curves_overlays": true
   },

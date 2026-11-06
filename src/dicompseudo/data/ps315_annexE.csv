@@ -1,0 +1,665 @@
+tag,keyword,name,vr,basic,rtn_uids,rtn_dev,rtn_inst,rtn_pat,rtn_dates_full,rtn_dates_mod,clean_desc,clean_struct,clean_graph,category,source
+"(0000,1000)",AffectedSOPInstanceUID,Affected SOP Instance UID,UI,X,K,,,,,,,,,uids,PS3.15
+"(0000,1001)",RequestedSOPInstanceUID,Requested SOP Instance UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0002,0003)",MediaStorageSOPInstanceUID,Media Storage SOP Instance UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0004,1511)",ReferencedSOPInstanceUIDInFile,Referenced SOP Instance UID in File,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,0012)",InstanceCreationDate,Instance Creation Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0013)",InstanceCreationTime,Instance Creation Time,TM,X/Z/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0014)",InstanceCreatorUID,Instance Creator UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,0015)",InstanceCoercionDateTime,Instance Coercion DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0008,0017)",AcquisitionUID,Acquisition UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,0018)",SOPInstanceUID,SOP Instance UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,0019)",PyramidUID,Pyramid UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,0020)",StudyDate,Study Date,DA,Z,,,,,K,C,,,,dates,PS3.15
+"(0008,0021)",SeriesDate,Series Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0022)",AcquisitionDate,Acquisition Date,DA,X/Z,,,,,K,C,,,,dates,PS3.15
+"(0008,0023)",ContentDate,Content Date,DA,Z/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0024)",OverlayDate,Overlay Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0008,0025)",CurveDate,Curve Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0008,002A)",AcquisitionDateTime,Acquisition DateTime,DT,X/Z/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0030)",StudyTime,Study Time,TM,Z,,,,,K,C,,,,dates,PS3.15
+"(0008,0031)",SeriesTime,Series Time,TM,X/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0032)",AcquisitionTime,Acquisition Time,TM,X/Z,,,,,K,C,,,,dates,PS3.15
+"(0008,0033)",ContentTime,Content Time,TM,Z/D,,,,,K,C,,,,dates,PS3.15
+"(0008,0034)",OverlayTime,Overlay Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0008,0035)",CurveTime,Curve Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0008,0050)",AccessionNumber,Accession Number,SH,Z,,,,,,,,,,identifiers,PS3.15
+"(0008,0054)",RetrieveAETitle,Retrieve AE Title,AE,X,,C,,,,,,,,device,PS3.15
+"(0008,0055)",StationAETitle,Station AE Title,AE,X,,C,,,,,,,,device,PS3.15
+"(0008,0058)",FailedSOPInstanceUIDList,Failed SOP Instance UID List,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,0080)",InstitutionName,Institution Name,LO,X/Z/D,,,K,,,,,,,institution,PS3.15
+"(0008,0081)",InstitutionAddress,Institution Address,ST,X,,,K,,,,,,,institution,PS3.15
+"(0008,0082)",InstitutionCodeSequence,Institution Code Sequence,SQ,X/Z/D,,,K,,,,,,,institution,PS3.15
+"(0008,0090)",ReferringPhysicianName,Referring Physician's Name,PN,Z,,,,,,,,,,staff,PS3.15
+"(0008,0092)",ReferringPhysicianAddress,Referring Physician's Address,ST,X,,,,,,,,,,staff,PS3.15
+"(0008,0094)",ReferringPhysicianTelephoneNumbers,Referring Physician's Telephone Numbers,SH,X,,,,,,,,,,staff,PS3.15
+"(0008,0096)",ReferringPhysicianIdentificationSequence,Referring Physician Identification Sequence,SQ,X,,,,,,,,,,staff,PS3.15
+"(0008,009C)",ConsultingPhysicianName,Consulting Physician's Name,PN,Z,,,,,,,,,,staff,PS3.15
+"(0008,009D)",ConsultingPhysicianIdentificationSequence,Consulting Physician Identification Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0008,0106)",ContextGroupVersion,Context Group Version,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0008,0107)",ContextGroupLocalVersion,Context Group Local Version,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0008,0201)",TimezoneOffsetFromUTC,Timezone Offset From UTC,SH,X,,,,,K,C,,,,dates,PS3.15
+"(0008,1000)",NetworkID,Network ID,AE,X,,C,,,,,,,,device,PS3.15
+"(0008,1010)",StationName,Station Name,SH,X/Z/D,,K,,,,,,,,device,PS3.15
+"(0008,1030)",StudyDescription,Study Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0008,103E)",SeriesDescription,Series Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1040)",InstitutionalDepartmentName,Institutional Department Name,LO,X,,,K,,,,,,,institution,PS3.15
+"(0008,1041)",InstitutionalDepartmentTypeCodeSequence,Institutional Department Type Code Sequence,SQ,X,,,K,,,,,,,institution,PS3.15
+"(0008,1048)",PhysiciansOfRecord,Physician(s) of Record,PN,X,,,,,,,,,,staff,PS3.15
+"(0008,1049)",PhysiciansOfRecordIdentificationSequence,Physician(s) of Record Identification Sequence,SQ,X,,,,,,,,,,staff,PS3.15
+"(0008,1050)",PerformingPhysicianName,Performing Physician's Name,PN,X,,,,,,,,,,staff,PS3.15
+"(0008,1052)",PerformingPhysicianIdentificationSequence,Performing Physician Identification Sequence,SQ,X,,,,,,,,,,staff,PS3.15
+"(0008,1060)",NameOfPhysiciansReadingStudy,Name of Physician(s) Reading Study,PN,X,,,,,,,,,,staff,PS3.15
+"(0008,1062)",PhysiciansReadingStudyIdentificationSequence,Physician(s) Reading Study Identification Sequence,SQ,X,,,,,,,,,,staff,PS3.15
+"(0008,1070)",OperatorsName,Operators' Name,PN,X/Z/D,,,,,,,,,,staff,PS3.15
+"(0008,1072)",OperatorIdentificationSequence,Operator Identification Sequence,SQ,X/D,,,,,,,,,,staff,PS3.15
+"(0008,1080)",AdmittingDiagnosesDescription,Admitting Diagnoses Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1084)",AdmittingDiagnosesCodeSequence,Admitting Diagnoses Code Sequence,SQ,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1088)",PyramidDescription,Pyramid Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1110)",ReferencedStudySequence,Referenced Study Sequence,SQ,X/Z,K,,,,,,,,,uids,PS3.15
+"(0008,1111)",ReferencedPerformedProcedureStepSequence,Referenced Performed Procedure Step Sequence,SQ,X/Z/D,K,,,,,,,,,uids,PS3.15
+"(0008,1120)",ReferencedPatientSequence,Referenced Patient Sequence,SQ,X,K,,,,,,,,,uids,PS3.15
+"(0008,1140)",ReferencedImageSequence,Referenced Image Sequence,SQ,X/Z/U*,K,,,,,,,,,uids,PS3.15
+"(0008,1155)",ReferencedSOPInstanceUID,Referenced SOP Instance UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,1195)",TransactionUID,Transaction UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,1301)",,Principal Diagnosis Code Sequence,,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1302)",,Primary Diagnosis Code Sequence,,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1303)",,Secondary Diagnoses Code Sequence,,X,,,,,,,C,,,free_text,PS3.15
+"(0008,1304)",,Histological Diagnoses Code Sequence,,X,,,,,,,C,,,free_text,PS3.15
+"(0008,2111)",DerivationDescription,Derivation Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0008,2112)",SourceImageSequence,Source Image Sequence,SQ,X/Z/U*,K,,,,,,,,,uids,PS3.15
+"(0008,3010)",IrradiationEventUID,Irradiation Event UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0008,4000)",IdentifyingComments,Identifying Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0010,0010)",PatientName,Patient's Name,PN,Z,,,,,,,,,,identity,PS3.15
+"(0010,0011)",,Person Names to Use Sequence,,X,,,,,,,,,,other,PS3.15
+"(0010,0012)",,Name to Use,,X,,,,,,,,,,other,PS3.15
+"(0010,0013)",,Name to Use Comment,,X,,,,,,,,,,other,PS3.15
+"(0010,0014)",,Third Person Pronouns Sequence,,X,,,,,,,,,,other,PS3.15
+"(0010,0015)",,Pronoun Code Sequence,,X,,,,,,,,,,other,PS3.15
+"(0010,0016)",,Pronoun Comment,,X,,,,,,,C,,,free_text,PS3.15
+"(0010,0020)",PatientID,Patient ID,LO,Z/D,,,,,,,,,,identity,PS3.15
+"(0010,0021)",IssuerOfPatientID,Issuer of Patient ID,LO,X,,,,,,,,,,identity,PS3.15
+"(0010,0024)",IssuerOfPatientIDQualifiersSequence,IssuerOfPatientIDQualifiersSequence,SQ,X,,,,,,,,,,identity,added
+"(0010,0030)",PatientBirthDate,Patient's Birth Date,DA,Z,,,,,,,,,,age,PS3.15
+"(0010,0032)",PatientBirthTime,Patient's Birth Time,TM,X,,,,,,,,,,age,PS3.15
+"(0010,0033)",PatientBirthDateInAlternativeCalendar,PatientBirthDateInAlternativeCalendar,LO,X,,,,,,,,,,age,added
+"(0010,0034)",PatientDeathDateInAlternativeCalendar,PatientDeathDateInAlternativeCalendar,LO,X,,,,,,,,,,age,added
+"(0010,0035)",PatientAlternativeCalendar,PatientAlternativeCalendar,CS,X,,,,,,,,,,age,added
+"(0010,0040)",PatientSex,Patient's Sex,CS,Z,,,,K,,,,,,sex,PS3.15
+"(0010,0041)",,Gender Identity Sequence,,X,,,,,,,,,,other,PS3.15
+"(0010,0042)",,Sex Parameters for Clinical Use Category Comment,,X,,,,C,,,C,,,medical_social,PS3.15
+"(0010,0043)",,Sex Parameters for Clinical Use Category Sequence,,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,0044)",,Gender Identity Code Sequence,,X,,,,,,,,,,other,PS3.15
+"(0010,0045)",,Gender Identity Comment,,X,,,,,,,C,,,free_text,PS3.15
+"(0010,0046)",,Sex Parameters for Clinical Use Category Code Sequence,,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,0047)",,Sex Parameters for Clinical Use Category Reference,,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,0050)",PatientInsurancePlanCodeSequence,Patient's Insurance Plan Code Sequence,SQ,X,,,,,,,,,,identity,PS3.15
+"(0010,0101)",PatientPrimaryLanguageCodeSequence,Patient's Primary Language Code Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0010,0102)",PatientPrimaryLanguageModifierCodeSequence,Patient's Primary Language Modifier Code Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0010,1000)",OtherPatientIDs,Other Patient IDs,LO,X,,,,,,,,,,identity,PS3.15
+"(0010,1001)",OtherPatientNames,Other Patient Names,PN,X,,,,,,,,,,identity,PS3.15
+"(0010,1002)",OtherPatientIDsSequence,Other Patient IDs Sequence,SQ,X,,,,,,,,,,identity,PS3.15
+"(0010,1005)",PatientBirthName,Patient's Birth Name,PN,X,,,,,,,,,,identity,PS3.15
+"(0010,1010)",PatientAge,Patient's Age,AS,X,,,,K,,,,,,age,PS3.15
+"(0010,1020)",PatientSize,Patient's Size,DS,X,,,,K,,,,,,body_measurements,PS3.15
+"(0010,1021)",PatientSizeCodeSequence,PatientSizeCodeSequence,SQ,X,,,,,,,,,,body_measurements,added
+"(0010,1022)",PatientBodyMassIndex,PatientBodyMassIndex,DS,X,,,,,,,,,,body_measurements,added
+"(0010,1023)",MeasuredAPDimension,MeasuredAPDimension,DS,X,,,,,,,,,,body_measurements,added
+"(0010,1024)",MeasuredLateralDimension,MeasuredLateralDimension,DS,X,,,,,,,,,,body_measurements,added
+"(0010,1030)",PatientWeight,Patient's Weight,DS,X,,,,K,,,,,,body_measurements,PS3.15
+"(0010,1040)",PatientAddress,Patient's Address,LO,X,,,,,,,,,,contact,PS3.15
+"(0010,1050)",InsurancePlanIdentification,Insurance Plan Identification,LO,X,,,,,,,,,,other,PS3.15
+"(0010,1060)",PatientMotherBirthName,Patient's Mother's Birth Name,PN,X,,,,,,,,,,identity,PS3.15
+"(0010,1080)",MilitaryRank,Military Rank,LO,X,,,,,,,,,,contact,PS3.15
+"(0010,1081)",BranchOfService,Branch of Service,LO,X,,,,,,,,,,contact,PS3.15
+"(0010,1090)",MedicalRecordLocator,Medical Record Locator,LO,X,,,,,,,,,,identity,PS3.15
+"(0010,1100)",ReferencedPatientPhotoSequence,Referenced Patient Photo Sequence,SQ,X,,,,,,,,,,identity,PS3.15
+"(0010,2000)",MedicalAlerts,Medical Alerts,LO,X,,,,,,,C,,,medical_social,PS3.15
+"(0010,2110)",Allergies,Allergies,LO,X,,,,C,,,C,,,medical_social,PS3.15
+"(0010,2150)",CountryOfResidence,Country of Residence,LO,X,,,,,,,,,,contact,PS3.15
+"(0010,2152)",RegionOfResidence,Region of Residence,LO,X,,,,,,,,,,contact,PS3.15
+"(0010,2154)",PatientTelephoneNumbers,Patient's Telephone Numbers,SH,X,,,,,,,,,,contact,PS3.15
+"(0010,2155)",PatientTelecomInformation,Patient's Telecom Information,LT,X,,,,,,,,,,contact,PS3.15
+"(0010,2160)",EthnicGroup,Ethnic Group,SH,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,2161)",EthnicGroupCodeSequence,Ethnic Group Code Sequence,SQ,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,2162)",,Ethnic Groups,,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,2180)",Occupation,Occupation,SH,X,,,,,,,C,,,medical_social,PS3.15
+"(0010,21A0)",SmokingStatus,Smoking Status,CS,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,21B0)",AdditionalPatientHistory,Additional Patient History,LT,X,,,,,,,C,,,medical_social,PS3.15
+"(0010,21C0)",PregnancyStatus,Pregnancy Status,US,X,,,,K,,,,,,medical_social,PS3.15
+"(0010,21D0)",LastMenstrualDate,Last Menstrual Date,DA,X,,,,,K,C,,,,medical_social,PS3.15
+"(0010,21F0)",PatientReligiousPreference,Patient's Religious Preference,LO,X,,,,,,,,,,medical_social,PS3.15
+"(0010,2203)",PatientSexNeutered,Patient's Sex Neutered,CS,X/Z,,,,K,,,,,,sex,PS3.15
+"(0010,2297)",ResponsiblePerson,Responsible Person,PN,X,,,,,,,,,,identity,PS3.15
+"(0010,2299)",ResponsibleOrganization,Responsible Organization,LO,X,,,,,,,,,,identity,PS3.15
+"(0010,4000)",PatientComments,Patient Comments,LT,X,,,,,,,C,,,medical_social,PS3.15
+"(0012,0010)",ClinicalTrialSponsorName,Clinical Trial Sponsor Name,LO,D,,,,,,,,,,other,PS3.15
+"(0012,0020)",ClinicalTrialProtocolID,Clinical Trial Protocol ID,LO,D,,,,,,,,,,other,PS3.15
+"(0012,0021)",ClinicalTrialProtocolName,Clinical Trial Protocol Name,LO,Z,,,,,,,,,,other,PS3.15
+"(0012,0022)",IssuerOfClinicalTrialProtocolID,Issuer of Clinical Trial Protocol ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0023)",OtherClinicalTrialProtocolIDsSequence,Other Clinical Trial Protocol IDs Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0012,0030)",ClinicalTrialSiteID,Clinical Trial Site ID,LO,Z,,,K,,,,,,,institution,PS3.15
+"(0012,0031)",ClinicalTrialSiteName,Clinical Trial Site Name,LO,Z,,,K,,,,,,,institution,PS3.15
+"(0012,0032)",IssuerOfClinicalTrialSiteID,Issuer of Clinical Trial Site ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0040)",ClinicalTrialSubjectID,Clinical Trial Subject ID,LO,D,,,,,,,,,,other,PS3.15
+"(0012,0041)",IssuerOfClinicalTrialSubjectID,Issuer of Clinical Trial Subject ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0042)",ClinicalTrialSubjectReadingID,Clinical Trial Subject Reading ID,LO,D,,,,,,,,,,other,PS3.15
+"(0012,0043)",IssuerOfClinicalTrialSubjectReadingID,Issuer of Clinical Trial Subject Reading ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0050)",ClinicalTrialTimePointID,Clinical Trial Time Point ID,LO,Z,,,,,,,,,,other,PS3.15
+"(0012,0051)",ClinicalTrialTimePointDescription,Clinical Trial Time Point Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0012,0055)",IssuerOfClinicalTrialTimePointID,Issuer of Clinical Trial Time Point ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0060)",ClinicalTrialCoordinatingCenterName,Clinical Trial Coordinating Center Name,LO,Z,,,K,,,,,,,institution,PS3.15
+"(0012,0071)",ClinicalTrialSeriesID,Clinical Trial Series ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0072)",ClinicalTrialSeriesDescription,Clinical Trial Series Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0012,0073)",IssuerOfClinicalTrialSeriesID,Issuer of Clinical Trial Series ID,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0081)",ClinicalTrialProtocolEthicsCommitteeName,Clinical Trial Protocol Ethics Committee Name,LO,D,,,K,,,,,,,institution,PS3.15
+"(0012,0082)",ClinicalTrialProtocolEthicsCommitteeApprovalNumber,Clinical Trial Protocol Ethics Committee Approval Number,LO,X,,,,,,,,,,other,PS3.15
+"(0012,0086)",EthicsCommitteeApprovalEffectivenessStartDate,Ethics Committee Approval Effectiveness Start Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0012,0087)",EthicsCommitteeApprovalEffectivenessEndDate,Ethics Committee Approval Effectiveness End Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0014,407C)",CalibrationTime,Calibration Time,TM,X,,K,,,K,C,,,,device,PS3.15
+"(0014,407E)",CalibrationDate,Calibration Date,DA,X,,K,,,K,C,,,,device,PS3.15
+"(0016,002B)",MakerNote,Maker Note,OB,X,,,,,,,C,,,free_text,PS3.15
+"(0016,004B)",DeviceSettingDescription,Device Setting Description,OB,X,,,,,,,C,,,free_text,PS3.15
+"(0016,004D)",CameraOwnerName,Camera Owner Name,UT,X,,,,,,,,,,other,PS3.15
+"(0016,004E)",LensSpecification,Lens Specification,DS,X,,K,,,,,,,,device,PS3.15
+"(0016,004F)",LensMake,Lens Make,UT,X,,K,,,,,,,,device,PS3.15
+"(0016,0050)",LensModel,Lens Model,UT,X,,K,,,,,,,,device,PS3.15
+"(0016,0051)",LensSerialNumber,Lens Serial Number,UT,X,,K,,,,,,,,device,PS3.15
+"(0016,0070)",GPSVersionID,GPS Version ID,OB,X,,,,,,,,,,other,PS3.15
+"(0016,0071)",GPSLatitudeRef,GPS Latitude​ Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,0072)",GPSLatitude,GPS Latitude​,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0073)",GPSLongitudeRef,GPS Longitude Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,0074)",GPSLongitude,GPS Longitude,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0075)",GPSAltitudeRef,GPS Altitude​ Ref,US,X,,,,,,,,,,other,PS3.15
+"(0016,0076)",GPSAltitude,GPS Altitude​,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0077)",GPSTimeStamp,GPS Time​ Stamp,DT,X,,,,,,,,,,other,PS3.15
+"(0016,0078)",GPSSatellites,GPS Satellites,UT,X,,,,,,,,,,other,PS3.15
+"(0016,0079)",GPSStatus,GPS Status,CS,X,,,,,,,,,,other,PS3.15
+"(0016,007A)",GPSMeasureMode,GPS Measure ​Mode,CS,X,,,,,,,,,,other,PS3.15
+"(0016,007B)",GPSDOP,GPS DOP,DS,X,,,,,,,,,,other,PS3.15
+"(0016,007C)",GPSSpeedRef,GPS Speed​ Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,007D)",GPSSpeed,GPS Speed​,DS,X,,,,,,,,,,other,PS3.15
+"(0016,007E)",GPSTrackRef,GPS Track ​Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,007F)",GPSTrack,GPS Track,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0080)",GPSImgDirectionRef,GPS Img​ Direction Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,0081)",GPSImgDirection,GPS Img ​Direction,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0082)",GPSMapDatum,GPS Map​ Datum,UT,X,,,,,,,,,,other,PS3.15
+"(0016,0083)",GPSDestLatitudeRef,GPS Dest​ Latitude Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,0084)",GPSDestLatitude,GPS Dest​ Latitude,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0085)",GPSDestLongitudeRef,GPS Dest ​Longitude Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,0086)",GPSDestLongitude,GPS Dest ​Longitude,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0087)",GPSDestBearingRef,GPS Dest​ Bearing Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,0088)",GPSDestBearing,GPS Dest ​Bearing,DS,X,,,,,,,,,,other,PS3.15
+"(0016,0089)",GPSDestDistanceRef,GPS Dest ​Distance Ref,CS,X,,,,,,,,,,other,PS3.15
+"(0016,008A)",GPSDestDistance,GPS Dest ​Distance,DS,X,,,,,,,,,,other,PS3.15
+"(0016,008B)",GPSProcessingMethod,GPS Processing​ Method,OB,X,,,,,,,,,,other,PS3.15
+"(0016,008C)",GPSAreaInformation,GPS Area ​Information,OB,X,,,,,,,,,,other,PS3.15
+"(0016,008D)",GPSDateStamp,GPS Date​ Stamp,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0016,008E)",GPSDifferential,GPS Differential,IS,X,,,,,,,,,,other,PS3.15
+"(0018,0010)",ContrastBolusAgent,Contrast/Bolus Agent,LO,Z/D,,,,,,,C,,,free_text,PS3.15
+"(0018,0027)",InterventionDrugStopTime,Intervention Drug Stop Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,0035)",InterventionDrugStartTime,Intervention Drug Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1000)",DeviceSerialNumber,Device Serial Number,LO,X/Z/D,,K,,,,,,,,device,PS3.15
+"(0018,1002)",DeviceUID,Device UID,UI,U,K,K,,,,,,,,uids,PS3.15
+"(0018,1004)",PlateID,Plate ID,LO,X,,K,,,,,,,,device,PS3.15
+"(0018,1005)",GeneratorID,Generator ID,LO,X,,K,,,,,,,,device,PS3.15
+"(0018,1007)",CassetteID,Cassette ID,LO,X,,K,,,,,,,,device,PS3.15
+"(0018,1008)",GantryID,Gantry ID,LO,X,,K,,,,,,,,device,PS3.15
+"(0018,1009)",UniqueDeviceIdentifier,Unique Device Identifier,UT,X,,K,,,,,,,,device,PS3.15
+"(0018,100A)",UDISequence,UDI Sequence,SQ,X,,K,,,,,,,,device,PS3.15
+"(0018,100B)",ManufacturerDeviceClassUID,Manufacturer's Device Class UID,UI,U,K,K,,,,,,,,uids,PS3.15
+"(0018,1010)",SecondaryCaptureDeviceID,Secondary Capture Device ID,LO,X,,K,,,,,,,,device,PS3.15
+"(0018,1011)",HardcopyCreationDeviceID,Hardcopy Creation Device ID,LO,X,,K,,,,,,,,device,PS3.15
+"(0018,1012)",DateOfSecondaryCapture,Date of Secondary Capture,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1014)",TimeOfSecondaryCapture,Time of Secondary Capture,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1030)",ProtocolName,Protocol Name,LO,X/D,,,,,,,C,,,free_text,PS3.15
+"(0018,1042)",ContrastBolusStartTime,Contrast/Bolus Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1043)",ContrastBolusStopTime,Contrast/Bolus Stop Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1072)",RadiopharmaceuticalStartTime,Radiopharmaceutical Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1073)",RadiopharmaceuticalStopTime,Radiopharmaceutical Stop Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1078)",RadiopharmaceuticalStartDateTime,Radiopharmaceutical Start DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0018,1079)",RadiopharmaceuticalStopDateTime,Radiopharmaceutical Stop DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0018,11BB)",AcquisitionFieldOfViewLabel,Acquisition Field of View Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(0018,1200)",DateOfLastCalibration,Date of Last Calibration,DA,X,,K,,,K,C,,,,device,PS3.15
+"(0018,1201)",TimeOfLastCalibration,Time of Last Calibration,TM,X,,K,,,K,C,,,,device,PS3.15
+"(0018,1202)",DateTimeOfLastCalibration,DateTime of Last Calibration,DT,X,,K,,,K,C,,,,device,PS3.15
+"(0018,1203)",CalibrationDateTime,Calibration DateTime,DT,Z,,K,,,K,C,,,,device,PS3.15
+"(0018,1204)",DateOfManufacture,Date of Manufacture,DA,X,,K,,,K,C,,,,device,PS3.15
+"(0018,1205)",DateOfInstallation,Date of Installation,DA,X,,K,,,K,C,,,,device,PS3.15
+"(0018,1400)",AcquisitionDeviceProcessingDescription,Acquisition Device Processing Description,LO,X/D,,,,,,,C,,,free_text,PS3.15
+"(0018,2042)",TargetUID,Target UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0018,4000)",AcquisitionComments,Acquisition Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0018,5011)",TransducerIdentificationSequence,Transducer Identification Sequence,SQ,X,,K,,,,,,,,device,PS3.15
+"(0018,700A)",DetectorID,Detector ID,SH,X/D,,K,,,,,,,,device,PS3.15
+"(0018,700C)",DateOfLastDetectorCalibration,Date of Last Detector Calibration,DA,X/D,,K,,,K,C,,,,device,PS3.15
+"(0018,700E)",TimeOfLastDetectorCalibration,Time of Last Detector Calibration,TM,X/D,,K,,,K,C,,,,device,PS3.15
+"(0018,9074)",FrameAcquisitionDateTime,Frame Acquisition DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,9151)",FrameReferenceDateTime,Frame Reference DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,9185)",RespiratoryMotionCompensationTechniqueDescription,Respiratory Motion Compensation Technique Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0018,9367)",XRaySourceID,X-Ray Source ID,UC,D,,K,,,,,,,,device,PS3.15
+"(0018,9369)",SourceStartDateTime,Source Start DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,936A)",SourceEndDateTime,Source End DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,9371)",XRayDetectorID,X-Ray Detector ID,UC,D,,K,,,,,,,,device,PS3.15
+"(0018,9373)",XRayDetectorLabel,X-Ray Detector Label,ST,X,,K,,,,,,,,device,PS3.15
+"(0018,937B)",MultienergyAcquisitionDescription,Multi-energy Acquisition Description,UT,X,,,,,,,C,,,free_text,PS3.15
+"(0018,937F)",DecompositionDescription,Decomposition Description,UT,X,,,,,,,C,,,free_text,PS3.15
+"(0018,9424)",AcquisitionProtocolDescription,Acquisition Protocol Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0018,9516)",StartAcquisitionDateTime,Start Acquisition DateTime,DT,X/D,,,,,K,C,,,,dates,PS3.15
+"(0018,9517)",EndAcquisitionDateTime,End Acquisition DateTime,DT,X/D,,,,,K,C,,,,dates,PS3.15
+"(0018,9623)",FunctionalSyncPulse,Functional Sync Pulse,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,9701)",DecayCorrectionDateTime,Decay Correction DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,9804)",ExclusionStartDateTime,Exclusion Start DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0018,9919)",InstructionPerformedDateTime,Instruction Performed DateTime,DT,Z/D,,,,,K,C,,,,dates,PS3.15
+"(0018,9937)",RequestedSeriesDescription,Requested Series Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0018,A002)",ContributionDateTime,Contribution DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0018,A003)",ContributionDescription,Contribution Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0020,000D)",StudyInstanceUID,Study Instance UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0020,000E)",SeriesInstanceUID,Series Instance UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0020,0010)",StudyID,Study ID,SH,Z,,,,,,,,,,identifiers,PS3.15
+"(0020,0027)",PyramidLabel,Pyramid Label,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0020,0052)",FrameOfReferenceUID,Frame of Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0020,0200)",SynchronizationFrameOfReferenceUID,Synchronization Frame of Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0020,3401)",ModifyingDeviceID,Modifying Device ID,CS,X,,K,,,,,,,,device,PS3.15
+"(0020,3403)",ModifiedImageDate,Modified Image Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0020,3405)",ModifiedImageTime,Modified Image Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0020,3406)",ModifiedImageDescription,Modified Image Description,LO,X,,,,,,,,,,other,PS3.15
+"(0020,4000)",ImageComments,Image Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0020,9158)",FrameComments,Frame Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0020,9161)",ConcatenationUID,Concatenation UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0020,9164)",DimensionOrganizationUID,Dimension Organization UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0028,1199)",PaletteColorLookupTableUID,Palette Color Lookup Table UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0028,1214)",LargePaletteColorLookupTableUID,Large Palette Color Lookup Table UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0028,4000)",ImagePresentationComments,Image Presentation Comments,LT,X,,,,,,,,,,other,PS3.15
+"(0032,0012)",StudyIDIssuer,Study ID Issuer,LO,X,,,,,,,,,,other,PS3.15
+"(0032,0032)",StudyVerifiedDate,Study Verified Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0032,0033)",StudyVerifiedTime,Study Verified Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0032,0034)",StudyReadDate,Study Read Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0032,0035)",StudyReadTime,Study Read Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1000)",ScheduledStudyStartDate,Scheduled Study Start Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1001)",ScheduledStudyStartTime,Scheduled Study Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1010)",ScheduledStudyStopDate,Scheduled Study Stop Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1011)",ScheduledStudyStopTime,Scheduled Study Stop Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1020)",ScheduledStudyLocation,Scheduled Study Location,LO,X,,K,,,,,,,,device,PS3.15
+"(0032,1021)",ScheduledStudyLocationAETitle,Scheduled Study Location AE Title,AE,X,,C,,,,,,,,device,PS3.15
+"(0032,1030)",ReasonForStudy,Reason for Study,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0032,1032)",RequestingPhysician,Requesting Physician,PN,X,,,,,,,,,,staff,PS3.15
+"(0032,1033)",RequestingService,Requesting Service,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0032,1040)",StudyArrivalDate,Study Arrival Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1041)",StudyArrivalTime,Study Arrival Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1050)",StudyCompletionDate,Study Completion Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1051)",StudyCompletionTime,Study Completion Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0032,1060)",RequestedProcedureDescription,Requested Procedure Description,LO,X/Z,,,,,,,C,,,free_text,PS3.15
+"(0032,1066)",ReasonForVisit,Reason for Visit,UT,X,,,,,,,C,,,free_text,PS3.15
+"(0032,1067)",ReasonForVisitCodeSequence,Reason for Visit Code Sequence,SQ,X,,,,,,,C,,,free_text,PS3.15
+"(0032,1070)",RequestedContrastAgent,Requested Contrast Agent,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0032,4000)",StudyComments,Study Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0034,0001)",FlowIdentifierSequence,Flow Identifier Sequence,SQ,D,,,,,,,,,,other,PS3.15
+"(0034,0002)",FlowIdentifier,Flow Identifier,OB,D,,,,,,,,,,other,PS3.15
+"(0034,0005)",SourceIdentifier,Source Identifier,OB,D,,,,,,,,,,other,PS3.15
+"(0034,0007)",FrameOriginTimestamp,Frame Origin Timestamp,OB,D,,,,,K,C,,,,dates,PS3.15
+"(0038,0004)",ReferencedPatientAliasSequence,Referenced Patient Alias Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0038,0010)",AdmissionID,Admission ID,LO,X,,,,,,,,,,identifiers,PS3.15
+"(0038,0011)",IssuerOfAdmissionID,Issuer of Admission ID,LO,X,,,,,,,,,,other,PS3.15
+"(0038,0014)",IssuerOfAdmissionIDSequence,Issuer of Admission ID Sequence,SQ,X,,,,,,,,,,identifiers,PS3.15
+"(0038,001A)",ScheduledAdmissionDate,Scheduled Admission Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0038,001B)",ScheduledAdmissionTime,Scheduled Admission Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0038,001C)",ScheduledDischargeDate,Scheduled Discharge Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0038,001D)",ScheduledDischargeTime,Scheduled Discharge Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0038,001E)",ScheduledPatientInstitutionResidence,Scheduled Patient Institution Residence,LO,X,,,,,,,,,,other,PS3.15
+"(0038,0020)",AdmittingDate,Admitting Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0038,0021)",AdmittingTime,Admitting Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0038,0030)",DischargeDate,Discharge Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0038,0032)",DischargeTime,Discharge Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0038,0040)",DischargeDiagnosisDescription,Discharge Diagnosis Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0038,0050)",SpecialNeeds,Special Needs,LO,X,,,,C,,,,,,medical_social,PS3.15
+"(0038,0060)",ServiceEpisodeID,Service Episode ID,LO,X,,,,,,,,,,identifiers,PS3.15
+"(0038,0061)",IssuerOfServiceEpisodeID,Issuer of Service Episode ID,LO,X,,,,,,,,,,other,PS3.15
+"(0038,0062)",ServiceEpisodeDescription,Service Episode Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0038,0064)",IssuerOfServiceEpisodeIDSequence,Issuer of Service Episode ID Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0038,0300)",CurrentPatientLocation,Current Patient Location,LO,X,,,,,,,,,,other,PS3.15
+"(0038,0400)",PatientInstitutionResidence,Patient's Institution Residence,LO,X,,,,,,,,,,other,PS3.15
+"(0038,0500)",PatientState,Patient State,LO,X,,,,C,,,C,,,medical_social,PS3.15
+"(0038,4000)",VisitComments,Visit Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(003A,0020)",MultiplexGroupLabel,Multiplex Group Label,SH,X,,,,,,,C,,,free_text,PS3.15
+"(003A,0203)",ChannelLabel,Channel Label,SH,X,,,,,,,C,,,free_text,PS3.15
+"(003A,020C)",ChannelDerivationDescription,Channel Derivation Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(003A,0310)",MultiplexGroupUID,Multiplex Group UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(003A,0314)",ImpedanceMeasurementDateTime,Impedance Measurement DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(003A,0329)",WaveformFilterDescription,​Waveform Filter Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(003A,032B)",FilterLookupTableDescription,Filter Lookup Table Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0001)",ScheduledStationAETitle,Scheduled Station AE Title,AE,X,,C,,,,,,,,device,PS3.15
+"(0040,0002)",ScheduledProcedureStepStartDate,Scheduled Procedure Step Start Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0003)",ScheduledProcedureStepStartTime,Scheduled Procedure Step Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0004)",ScheduledProcedureStepEndDate,Scheduled Procedure Step End Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0005)",ScheduledProcedureStepEndTime,Scheduled Procedure Step End Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0006)",ScheduledPerformingPhysicianName,Scheduled Performing Physician's Name,PN,X,,,,,,,,,,staff,PS3.15
+"(0040,0007)",ScheduledProcedureStepDescription,Scheduled Procedure Step Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0009)",ScheduledProcedureStepID,Scheduled Procedure Step ID,SH,X,,,,,,,,,,identifiers,PS3.15
+"(0040,000B)",ScheduledPerformingPhysicianIdentificationSequence,Scheduled Performing Physician Identification Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,0010)",ScheduledStationName,Scheduled Station Name,SH,X,,K,,,,,,,,device,PS3.15
+"(0040,0011)",ScheduledProcedureStepLocation,Scheduled Procedure Step Location,SH,X,,K,,,,,,,,device,PS3.15
+"(0040,0012)",PreMedication,Pre-Medication,LO,X,,,,C,,,,,,medical_social,PS3.15
+"(0040,0241)",PerformedStationAETitle,Performed Station AE Title,AE,X,,C,,,,,,,,device,PS3.15
+"(0040,0242)",PerformedStationName,Performed Station Name,SH,X,,K,,,,,,,,device,PS3.15
+"(0040,0243)",PerformedLocation,Performed Location,SH,X,,,,,,,,,,other,PS3.15
+"(0040,0244)",PerformedProcedureStepStartDate,Performed Procedure Step Start Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0245)",PerformedProcedureStepStartTime,Performed Procedure Step Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0250)",PerformedProcedureStepEndDate,Performed Procedure Step End Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0251)",PerformedProcedureStepEndTime,Performed Procedure Step End Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,0253)",PerformedProcedureStepID,Performed Procedure Step ID,SH,X,,,,,,,,,,identifiers,PS3.15
+"(0040,0254)",PerformedProcedureStepDescription,Performed Procedure Step Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0275)",RequestAttributesSequence,Request Attributes Sequence,SQ,X,,,,,,,C,,,identifiers,PS3.15
+"(0040,0280)",CommentsOnThePerformedProcedureStep,Comments on the Performed Procedure Step,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0310)",CommentsOnRadiationDose,Comments on Radiation Dose,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0040,050A)",SpecimenAccessionNumber,Specimen Accession Number,LO,X,,,,,,,,,,other,PS3.15
+"(0040,0512)",ContainerIdentifier,Container Identifier,LO,D,,,,,,,,,,other,PS3.15
+"(0040,0513)",IssuerOfTheContainerIdentifierSequence,Issuer of the Container Identifier Sequence,SQ,Z,,,,,,,,,,other,PS3.15
+"(0040,051A)",ContainerDescription,Container Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0551)",SpecimenIdentifier,Specimen Identifier,LO,D,,,,,,,,,,other,PS3.15
+"(0040,0554)",SpecimenUID,Specimen UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,0555)",AcquisitionContextSequence,Acquisition Context Sequence,SQ,X/Z,,,,,,,,C,,structured_content,PS3.15
+"(0040,0556)",AcquisitionContextDescription,Acquisition Context Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0562)",IssuerOfTheSpecimenIdentifierSequence,Issuer of the Specimen Identifier Sequence,SQ,Z,,,,,,,,,,other,PS3.15
+"(0040,0600)",SpecimenShortDescription,Specimen Short Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0602)",SpecimenDetailedDescription,Specimen Detailed Description,UT,X,,,,,,,C,,,free_text,PS3.15
+"(0040,0610)",SpecimenPreparationSequence,Specimen Preparation Sequence,SQ,Z,,,,,,,,C,,structured_content,PS3.15
+"(0040,06FA)",SlideIdentifier,Slide Identifier,LO,X,,,,,,,,,,other,PS3.15
+"(0040,1001)",RequestedProcedureID,Requested Procedure ID,SH,X,,,,,,,,,,identifiers,PS3.15
+"(0040,1002)",ReasonForTheRequestedProcedure,Reason for the Requested Procedure,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0040,1004)",PatientTransportArrangements,Patient Transport Arrangements,LO,X,,,,,,,,,,other,PS3.15
+"(0040,1005)",RequestedProcedureLocation,Requested Procedure Location,LO,X,,,,,,,,,,other,PS3.15
+"(0040,100A)",ReasonForRequestedProcedureCodeSequence,Reason for Requested Procedure Code Sequence,SQ,X,,,,,,,C,,,free_text,PS3.15
+"(0040,1010)",NamesOfIntendedRecipientsOfResults,Names of Intended Recipients of Results,PN,X,,,,,,,,,,staff,PS3.15
+"(0040,1011)",IntendedRecipientsOfResultsIdentificationSequence,Intended Recipients of Results Identification Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,1101)",PersonIdentificationCodeSequence,Person Identification Code Sequence,SQ,D,,,,,,,,,,other,PS3.15
+"(0040,1102)",PersonAddress,Person's Address,ST,X,,,,,,,,,,other,PS3.15
+"(0040,1103)",PersonTelephoneNumbers,Person's Telephone Numbers,LO,X,,,,,,,,,,other,PS3.15
+"(0040,1104)",PersonTelecomInformation,Person's Telecom Information,LT,X,,,,,,,,,,other,PS3.15
+"(0040,1400)",RequestedProcedureComments,Requested Procedure Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0040,2001)",ReasonForTheImagingServiceRequest,Reason for the Imaging Service Request,LO,X,,,,,,,C,,,free_text,PS3.15
+"(0040,2004)",IssueDateOfImagingServiceRequest,Issue Date of Imaging Service Request,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,2005)",IssueTimeOfImagingServiceRequest,Issue Time of Imaging Service Request,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,2008)",OrderEnteredBy,Order Entered By,PN,X,,,,,,,,,,staff,PS3.15
+"(0040,2009)",OrderEntererLocation,Order Enterer's Location,SH,X,,,,,,,,,,other,PS3.15
+"(0040,2010)",OrderCallbackPhoneNumber,Order Callback Phone Number,SH,X,,,,,,,,,,other,PS3.15
+"(0040,2011)",OrderCallbackTelecomInformation,Order Callback Telecom Information,LT,X,,,,,,,,,,other,PS3.15
+"(0040,2016)",PlacerOrderNumberImagingServiceRequest,Placer Order Number / Imaging Service Request,LO,Z,,,,,,,,,,identifiers,PS3.15
+"(0040,2017)",FillerOrderNumberImagingServiceRequest,Filler Order Number / Imaging Service Request,LO,Z,,,,,,,,,,identifiers,PS3.15
+"(0040,2400)",ImagingServiceRequestComments,Imaging Service Request Comments,LT,X,,,,,,,C,,,free_text,PS3.15
+"(0040,3001)",ConfidentialityConstraintOnPatientDataDescription,Confidentiality Constraint on Patient Data Description,LO,X,,,,,,,,,,other,PS3.15
+"(0040,4005)",ScheduledProcedureStepStartDateTime,Scheduled Procedure Step Start DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,4008)",ScheduledProcedureStepExpirationDateTime,Scheduled Procedure Step Expiration DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,4010)",ScheduledProcedureStepModificationDateTime,Scheduled Procedure Step Modification DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,4011)",ExpectedCompletionDateTime,Expected Completion DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,4023)",ReferencedGeneralPurposeScheduledProcedureStepTransactionUID,Referenced General Purpose Scheduled Procedure Step Transaction UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,4025)",ScheduledStationNameCodeSequence,Scheduled Station Name Code Sequence,SQ,X,,K,,,,,,,,device,PS3.15
+"(0040,4027)",ScheduledStationGeographicLocationCodeSequence,Scheduled Station Geographic Location Code Sequence,SQ,X,,K,,,,,,,,device,PS3.15
+"(0040,4028)",PerformedStationNameCodeSequence,Performed Station Name Code Sequence,SQ,X,,K,,,,,,,,device,PS3.15
+"(0040,4030)",PerformedStationGeographicLocationCodeSequence,Performed Station Geographic Location Code Sequence,SQ,X,,K,,,,,,,,device,PS3.15
+"(0040,4034)",ScheduledHumanPerformersSequence,Scheduled Human Performers Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,4035)",ActualHumanPerformersSequence,Actual Human Performers Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,4036)",HumanPerformerOrganization,Human Performer's Organization,LO,X,,,,,,,,,,other,PS3.15
+"(0040,4037)",HumanPerformerName,Human Performer's Name,PN,X,,,,,,,,,,staff,PS3.15
+"(0040,4050)",PerformedProcedureStepStartDateTime,Performed Procedure Step Start DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,4051)",PerformedProcedureStepEndDateTime,Performed Procedure Step End DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,4052)",ProcedureStepCancellationDateTime,Procedure Step Cancellation DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A023)",FindingsGroupRecordingDateTrial,Findings Group Recording Date (Trial),DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A024)",FindingsGroupRecordingTimeTrial,Findings Group Recording Time (Trial),TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A027)",VerifyingOrganization,Verifying Organization,LO,D,,,,,,,,,,other,PS3.15
+"(0040,A030)",VerificationDateTime,Verification DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0040,A032)",ObservationDateTime,Observation DateTime,DT,X/D,,,,,K,C,,,,dates,PS3.15
+"(0040,A033)",ObservationStartDateTime,Observation Start DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A034)",,Effective Start DateTime,,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A035)",,Effective Stop DateTime,,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A073)",VerifyingObserverSequence,Verifying Observer Sequence,SQ,D,,,,,,,,,,other,PS3.15
+"(0040,A075)",VerifyingObserverName,Verifying Observer Name,PN,D,,,,,,,,,,staff,PS3.15
+"(0040,A078)",AuthorObserverSequence,Author Observer Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,A07A)",ParticipantSequence,Participant Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,A07C)",CustodialOrganizationSequence,Custodial Organization Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0040,A082)",ParticipationDateTime,Participation DateTime,DT,Z,,,,,K,C,,,,dates,PS3.15
+"(0040,A088)",VerifyingObserverIdentificationCodeSequence,Verifying Observer Identification Code Sequence,SQ,Z,,,,,,,,,,other,PS3.15
+"(0040,A110)",DateOfDocumentOrVerbalTransactionTrial,Date of Document or Verbal Transaction (Trial),DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A112)",TimeOfDocumentCreationOrVerbalTransactionTrial,Time of Document Creation or Verbal Transaction (Trial),TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A120)",DateTime,DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0040,A121)",Date,Date,DA,D,,,,,K,C,,,,dates,PS3.15
+"(0040,A122)",Time,Time,TM,D,,,,,K,C,,,,dates,PS3.15
+"(0040,A123)",PersonName,Person Name,PN,D,,,,,,,,,,identity,PS3.15
+"(0040,A124)",UID,UID,UI,U,,,,,,,,,,other,PS3.15
+"(0040,A13A)",ReferencedDateTime,Referenced DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0040,A171)",ObservationUID,Observation UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,A172)",ReferencedObservationUIDTrial,Referenced Observation UID (Trial),UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,A192)",ObservationDateTrial,Observation Date (Trial),DA,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A193)",ObservationTimeTrial,Observation Time (Trial),TM,X,,,,,K,C,,,,dates,PS3.15
+"(0040,A307)",CurrentObserverTrial,Current Observer (Trial),PN,X,,,,,,,,,,staff,PS3.15
+"(0040,A352)",VerbalSourceTrial,Verbal Source (Trial),PN,X,,,,,,,,,,staff,PS3.15
+"(0040,A353)",AddressTrial,Address (Trial),ST,X,,,,,,,,,,other,PS3.15
+"(0040,A354)",TelephoneNumberTrial,Telephone Number (Trial),LO,X,,,,,,,,,,other,PS3.15
+"(0040,A358)",VerbalSourceIdentifierCodeSequenceTrial,Verbal Source Identifier Code Sequence (Trial),SQ,X,,,,,,,,,,other,PS3.15
+"(0040,A402)",ObservationSubjectUIDTrial,Observation Subject UID (Trial),UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,A730)",ContentSequence,Content Sequence,SQ,D,,,,,,,,C,,structured_content,PS3.15
+"(0040,B020)",WaveformAnnotationSequence,Waveform Annotation Sequence,SQ,X/D,,,,,,,,C,,structured_content,PS3.15
+"(0040,B034)",,Annotation DateTime,,X,,,,,K,C,,,,dates,PS3.15
+"(0040,B036)",,Segment Definition DateTime,,X,,,,,K,C,,,,dates,PS3.15
+"(0040,B03B)",,Montage Name,,X,,,,,,,C,,,free_text,PS3.15
+"(0040,B03F)",,Montage Channel Label,,X,,,,,,,C,,,free_text,PS3.15
+"(0040,DB06)",TemplateVersion,Template Version,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,DB07)",TemplateLocalVersion,Template Local Version,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,DB0C)",TemplateExtensionOrganizationUID,Template Extension Organization UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,DB0D)",TemplateExtensionCreatorUID,Template Extension Creator UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0040,E004)",HL7DocumentEffectiveTime,HL7 Document Effective Time,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0040,E012)",,Display URI,,X,,,,,,,,,,other,PS3.15
+"(0042,0011)",EncapsulatedDocument,Encapsulated Document,OB,D,,,,,,,,,,other,PS3.15
+"(0044,0004)",ApprovalStatusDateTime,Approval Status DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0044,000B)",ProductExpirationDateTime,Product Expiration DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0044,0010)",SubstanceAdministrationDateTime,Substance Administration DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0044,0104)",AssertionDateTime,Assertion DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0044,0105)",AssertionExpirationDateTime,Assertion Expiration DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0050,001B)",ContainerComponentID,Container Component ID,LO,X,,,,,,,,,,other,PS3.15
+"(0050,0020)",DeviceDescription,Device Description,LO,X,,K,,,,,,,,device,PS3.15
+"(0050,0021)",LongDeviceDescription,Long Device Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(0062,0021)",TrackingUID,Tracking UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0064,0003)",SourceFrameOfReferenceUID,Source Frame of Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0068,6226)",EffectiveDateTime,Effective DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0068,6270)",InformationIssueDateTime,Information Issue DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(006A,0003)",AnnotationGroupUID,Annotation Group UID,UI,D,K,,,,,,,,,uids,PS3.15
+"(006A,0005)",AnnotationGroupLabel,Annotation Group Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(006A,0006)",AnnotationGroupDescription,Annotation Group Description,UT,X,,,,,,,C,,,free_text,PS3.15
+"(0070,0001)",GraphicAnnotationSequence,Graphic Annotation Sequence,SQ,D,,,,,,,,,C,graphics,PS3.15
+"(0070,0006)",UnformattedTextValue,Unformatted Text Value,ST,D,,,,,,,C,,,free_text,PS3.15
+"(0070,0082)",PresentationCreationDate,Presentation Creation Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(0070,0083)",PresentationCreationTime,Presentation Creation Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(0070,0084)",ContentCreatorName,Content Creator's Name,PN,Z/D,,,,,,,,,,staff,PS3.15
+"(0070,0086)",ContentCreatorIdentificationCodeSequence,Content Creator's Identification Code Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0070,031A)",FiducialUID,Fiducial UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0070,1101)",PresentationDisplayCollectionUID,Presentation Display Collection UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0070,1102)",PresentationSequenceCollectionUID,Presentation Sequence Collection UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0072,000A)",HangingProtocolCreationDateTime,Hanging Protocol Creation DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0072,005E)",SelectorAEValue,Selector AE Value,AE,D,,C,,,,,,,,device,PS3.15
+"(0072,005F)",SelectorASValue,Selector AS Value,AS,D,,,,K,,,,,,medical_social,PS3.15
+"(0072,0061)",SelectorDAValue,Selector DA Value,DA,D,,,,,K,C,,,,dates,PS3.15
+"(0072,0063)",SelectorDTValue,Selector DT Value,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0072,0065)",SelectorOBValue,Selector OB Value,OB,D,,,,,,,,,,other,PS3.15
+"(0072,0066)",SelectorLOValue,Selector LO Value,LO,D,,,,,,,C,,,free_text,PS3.15
+"(0072,0068)",SelectorLTValue,Selector LT Value,LT,D,,,,,,,C,,,free_text,PS3.15
+"(0072,006A)",SelectorPNValue,Selector PN Value,PN,D,,,,,,,,,,staff,PS3.15
+"(0072,006B)",SelectorTMValue,Selector TM Value,TM,D,,,,,K,C,,,,dates,PS3.15
+"(0072,006C)",SelectorSHValue,Selector SH Value,SH,D,,,,,,,C,,,free_text,PS3.15
+"(0072,006D)",SelectorUNValue,Selector UN Value,UN,D,,,,,,,,,,other,PS3.15
+"(0072,006E)",SelectorSTValue,Selector ST Value,ST,D,,,,,,,C,,,free_text,PS3.15
+"(0072,0070)",SelectorUTValue,Selector UT Value,UT,D,,,,,,,C,,,free_text,PS3.15
+"(0072,0071)",SelectorURValue,Selector UR Value,UR,D,,,,,,,,,,other,PS3.15
+"(0074,1234)",ReceivingAE,Receiving AE,AE,X,,C,,,,,,,,device,PS3.15
+"(0074,1236)",RequestingAE,Requesting AE,AE,X,,C,,,,,,,,device,PS3.15
+"(0088,0140)",StorageMediaFileSetUID,Storage Media File-set UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(0088,0200)",IconImageSequence,Icon Image Sequence (see Note 11),SQ,X,,,,,,,,,,other,PS3.15
+"(0088,0904)",TopicTitle,Topic Title,LO,X,,,,,,,,,,other,PS3.15
+"(0088,0906)",TopicSubject,Topic Subject,ST,X,,,,,,,,,,other,PS3.15
+"(0088,0910)",TopicAuthor,Topic Author,LO,X,,,,,,,,,,other,PS3.15
+"(0088,0912)",TopicKeywords,Topic Keywords,LO,X,,,,,,,,,,other,PS3.15
+"(0100,0420)",SOPAuthorizationDateTime,SOP Authorization DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(0400,0100)",DigitalSignatureUID,Digital Signature UID,UI,U,,,,,,,,,,other,PS3.15
+"(0400,0105)",DigitalSignatureDateTime,Digital Signature DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0400,0115)",CertificateOfSigner,Certificate of Signer,OB,D,,,,,,,,,,other,PS3.15
+"(0400,0310)",CertifiedTimestamp,Certified Timestamp,OB,X,,,,,K,C,,,,dates,PS3.15
+"(0400,0402)",ReferencedDigitalSignatureSequence,Referenced Digital Signature Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0400,0403)",ReferencedSOPInstanceMACSequence,Referenced SOP Instance MAC Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0400,0404)",MAC,MAC,OB,X,,,,,,,,,,other,PS3.15
+"(0400,0550)",ModifiedAttributesSequence,Modified Attributes Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0400,0551)",NonconformingModifiedAttributesSequence,Nonconforming Modified Attributes Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0400,0552)",NonconformingDataElementValue,Nonconforming Data Element Value,OB,X,,,,,,,,,,other,PS3.15
+"(0400,0561)",OriginalAttributesSequence,Original Attributes Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(0400,0562)",AttributeModificationDateTime,Attribute Modification DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(0400,0563)",ModifyingSystem,Modifying System,LO,D,,K,,,,,,,,device,PS3.15
+"(0400,0564)",SourceOfPreviousValues,Source of Previous Values,LO,Z,,,K,,,,,,,institution,PS3.15
+"(0400,0565)",ReasonForTheAttributeModification,Reason for the Attribute Modification,CS,D,,,,,,,C,,,free_text,PS3.15
+"(0400,0600)",InstanceOriginStatus,Instance Origin Status,CS,X,,,,,,,,,,other,PS3.15
+"(2030,0020)",TextString,Text String,LO,X,,,,,,,,,,other,PS3.15
+"(2100,0040)",CreationDate,Creation Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(2100,0050)",CreationTime,Creation Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(2100,0070)",Originator,Originator,AE,X,,C,,,,,,,,device,PS3.15
+"(2100,0140)",DestinationAE,Destination AE,AE,D,,C,,,,,,,,device,PS3.15
+"(2200,0002)",LabelText,Label Text,UT,X/Z,,,,,,,C,,,free_text,PS3.15
+"(2200,0005)",BarcodeValue,Barcode Value,LT,X/Z,,,,,,,,,,other,PS3.15
+"(3002,0121)",PositionAcquisitionTemplateName,Position Acquisition Template Name,LO,X,,,,,,,C,,,free_text,PS3.15
+"(3002,0123)",PositionAcquisitionTemplateDescription,Position Acquisition Template Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(3004,007F)",,Dose Calculation Model Name,,X,,,,,,,C,,,free_text,PS3.15
+"(3006,0002)",StructureSetLabel,Structure Set Label,SH,D,,,,,,,C,,,free_text,PS3.15
+"(3006,0004)",StructureSetName,Structure Set Name,LO,X,,,,,,,C,,,free_text,PS3.15
+"(3006,0006)",StructureSetDescription,Structure Set Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(3006,0008)",StructureSetDate,Structure Set Date,DA,Z,,,,,K,C,,,,dates,PS3.15
+"(3006,0009)",StructureSetTime,Structure Set Time,TM,Z,,,,,K,C,,,,dates,PS3.15
+"(3006,0024)",ReferencedFrameOfReferenceUID,Referenced Frame of Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3006,0026)",ROIName,ROI Name,LO,Z,,,,,,,C,,,free_text,PS3.15
+"(3006,0028)",ROIDescription,ROI Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(3006,002D)",ROIDateTime,ROI DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(3006,002E)",ROIObservationDateTime,ROI Observation DateTime,DT,X,,,,,K,C,,,,dates,PS3.15
+"(3006,0038)",ROIGenerationDescription,ROI Generation Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(3006,004D)",ROICreatorSequence,ROI Creator Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(3006,004E)",ROIInterpreterSequence,ROI Interpreter Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(3006,0085)",ROIObservationLabel,ROI Observation Label,SH,X,,,,,,,C,,,free_text,PS3.15
+"(3006,0088)",ROIObservationDescription,ROI Observation Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(3006,00A6)",ROIInterpreter,ROI Interpreter,PN,Z,,,,,,,,,,staff,PS3.15
+"(3006,00C2)",RelatedFrameOfReferenceUID,Related Frame of Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3008,0024)",TreatmentControlPointDate,Treatment Control Point Date,DA,D,,,,,K,C,,,,dates,PS3.15
+"(3008,0025)",TreatmentControlPointTime,Treatment Control Point Time,TM,D,,,,,K,C,,,,dates,PS3.15
+"(3008,0054)",FirstTreatmentDate,First Treatment Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(3008,0056)",MostRecentTreatmentDate,Most Recent Treatment Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(3008,0105)",SourceSerialNumber,Source Serial Number,LO,X/Z,,K,,,,,,,,device,PS3.15
+"(3008,0162)",SafePositionExitDate,Safe Position Exit Date,DA,D,,,,,K,C,,,,dates,PS3.15
+"(3008,0164)",SafePositionExitTime,Safe Position Exit Time,TM,D,,,,,K,C,,,,dates,PS3.15
+"(3008,0166)",SafePositionReturnDate,Safe Position Return Date,DA,D,,,,,K,C,,,,dates,PS3.15
+"(3008,0168)",SafePositionReturnTime,Safe Position Return Time,TM,D,,,,,K,C,,,,dates,PS3.15
+"(3008,0250)",TreatmentDate,Treatment Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(3008,0251)",TreatmentTime,Treatment Time,TM,X/D,,,,,K,C,,,,dates,PS3.15
+"(300A,0002)",RTPlanLabel,RT Plan Label,SH,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0003)",RTPlanName,RT Plan Name,LO,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0004)",RTPlanDescription,RT Plan Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0006)",RTPlanDate,RT Plan Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(300A,0007)",RTPlanTime,RT Plan Time,TM,X/D,,,,,K,C,,,,dates,PS3.15
+"(300A,000B)",TreatmentSites,Treatment Sites,LO,X,,,,,,,C,,,free_text,PS3.15
+"(300A,000E)",PrescriptionDescription,Prescription Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0013)",DoseReferenceUID,Dose Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,0016)",DoseReferenceDescription,Dose Reference Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0054)",TableTopPositionAlignmentUID,Table Top Position Alignment UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,0072)",FractionGroupDescription,Fraction Group Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0083)",ReferencedDoseReferenceUID,Referenced Dose Reference UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,00B2)",TreatmentMachineName,Treatment Machine Name,SH,X/Z,,K,,,,,,,,device,PS3.15
+"(300A,00C3)",BeamDescription,Beam Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,00DD)",BolusDescription,Bolus Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0196)",FixationDeviceDescription,Fixation Device Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,01A6)",ShieldingDeviceDescription,Shielding Device Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,01B2)",SetupTechniqueDescription,Setup Technique Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0216)",SourceManufacturer,Source Manufacturer,LO,X,,K,,,,,,,,device,PS3.15
+"(300A,022C)",SourceStrengthReferenceDate,Source Strength Reference Date,DA,D,,,,,K,C,,,,dates,PS3.15
+"(300A,022E)",SourceStrengthReferenceTime,Source Strength Reference Time,TM,D,,,,,K,C,,,,dates,PS3.15
+"(300A,02EB)",CompensatorDescription,Compensator Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0608)",TreatmentPositionGroupLabel,Treatment Position Group Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0609)",TreatmentPositionGroupUID,Treatment Position Group UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,0611)",RTAccessoryHolderSlotID,RT Accessory Holder Slot ID,LO,Z,,,,,,,,,,other,PS3.15
+"(300A,0615)",RTAccessoryDeviceSlotID,RT Accessory Device Slot ID,LO,Z,,,,,,,,,,other,PS3.15
+"(300A,0619)",RadiationDoseIdentificationLabel,Radiation Dose Identification Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0623)",RadiationDoseInVivoMeasurementLabel,Radiation Dose In-Vivo Measurement Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(300A,062A)",RTToleranceSetLabel,RT Tolerance Set Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0650)",PatientSetupUID,Patient Setup UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,0676)",EquipmentFrameOfReferenceDescription,Equipment Frame of Reference Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(300A,067C)",RadiationGenerationModeLabel,Radiation Generation Mode Label,SH,D,,,,,,,C,,,free_text,PS3.15
+"(300A,067D)",RadiationGenerationModeDescription,Radiation Generation Mode Description,ST,Z,,,,,,,C,,,free_text,PS3.15
+"(300A,0700)",TreatmentSessionUID,Treatment Session UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,0734)",TreatmentToleranceViolationDescription,Treatment Tolerance Violation Description,ST,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0736)",TreatmentToleranceViolationDateTime,Treatment Tolerance Violation DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(300A,073A)",RecordedRTControlPointDateTime,Recorded RT Control Point DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(300A,0741)",InterlockDateTime,Interlock DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(300A,0742)",InterlockDescription,Interlock Description,ST,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0760)",OverrideDateTime,Override DateTime,DT,D,,,,,K,C,,,,dates,PS3.15
+"(300A,0783)",InterlockOriginDescription,Interlock Origin Description,ST,D,,,,,,,C,,,free_text,PS3.15
+"(300A,0785)",ReferencedTreatmentPositionGroupUID,Referenced Treatment Position Group UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(300A,078E)",PatientTreatmentPreparationProcedureParameterDescription,Patient Treatment Preparation Procedure Parameter Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0792)",PatientTreatmentPreparationMethodDescription,Patient Treatment Preparation Method Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(300A,0794)",PatientSetupPhotoDescription,Patient Setup Photo Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(300A,079A)",DisplacementReferenceLabel,Displacement Reference Label,LO,X,,,,,,,C,,,free_text,PS3.15
+"(300C,0113)",ReasonForOmissionDescription,Reason for Omission Description,LO,X,,,,,,,C,,,free_text,PS3.15
+"(300C,0127)",BeamHoldTransitionDateTime,Beam Hold Transition DateTime,DT,D,,K,,,K,C,,,,device,PS3.15
+"(300E,0004)",ReviewDate,Review Date,DA,Z,,,,,K,C,,,,dates,PS3.15
+"(300E,0005)",ReviewTime,Review Time,TM,Z,,,,,K,C,,,,dates,PS3.15
+"(300E,0008)",ReviewerName,Reviewer Name,PN,X/Z,,,,,,,,,,staff,PS3.15
+"(3010,0006)",ConceptualVolumeUID,Conceptual Volume UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,000B)",ReferencedConceptualVolumeUID,Referenced Conceptual Volume UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,000F)",ConceptualVolumeCombinationDescription,Conceptual Volume Combination Description,ST,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,0013)",ConstituentConceptualVolumeUID,Constituent Conceptual Volume UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,0015)",SourceConceptualVolumeUID,Source Conceptual Volume UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,0017)",ConceptualVolumeDescription,Conceptual Volume Description,ST,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,001B)",DeviceAlternateIdentifier,Device Alternate Identifier,UC,Z,,,,,,,,,,other,PS3.15
+"(3010,002D)",DeviceLabel,Device Label,LO,D,,K,,,,,,,,device,PS3.15
+"(3010,0031)",ReferencedFiducialsUID,Referenced Fiducials UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,0033)",UserContentLabel,User Content Label,SH,D,,,,,,,C,,,free_text,PS3.15
+"(3010,0034)",UserContentLongLabel,User Content Long Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(3010,0035)",EntityLabel,Entity Label,SH,D,,,,,,,C,,,free_text,PS3.15
+"(3010,0036)",EntityName,Entity Name,LO,X,,,,,,,C,,,free_text,PS3.15
+"(3010,0037)",EntityDescription,Entity Description,ST,X,,,,,,,C,,,free_text,PS3.15
+"(3010,0038)",EntityLongLabel,Entity Long Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(3010,003B)",RTTreatmentPhaseUID,RT Treatment Phase UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,0043)",ManufacturerDeviceIdentifier,Manufacturer's Device Identifier,ST,Z,,K,,,,,,,,device,PS3.15
+"(3010,004C)",IntendedPhaseStartDate,Intended Phase Start Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(3010,004D)",IntendedPhaseEndDate,Intended Phase End Date,DA,X/D,,,,,K,C,,,,dates,PS3.15
+"(3010,0054)",RTPrescriptionLabel,RT Prescription Label,LO,D,,,,,,,C,,,free_text,PS3.15
+"(3010,0056)",RTTreatmentApproachLabel,RT Treatment Approach Label,LO,X/D,,,,,,,C,,,free_text,PS3.15
+"(3010,005A)",RTPhysicianIntentNarrative,RT Physician Intent Narrative,UT,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,005C)",ReasonForSuperseding,Reason for Superseding,ST,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,0061)",PriorTreatmentDoseDescription,Prior Treatment Dose Description,UT,X,,,,,,,C,,,free_text,PS3.15
+"(3010,006E)",DosimetricObjectiveUID,Dosimetric Objective UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,006F)",ReferencedDosimetricObjectiveUID,Referenced Dosimetric Objective UID,UI,U,K,,,,,,,,,uids,PS3.15
+"(3010,0077)",TreatmentSite,Treatment Site,LO,X/D,,,,,,,C,,,free_text,PS3.15
+"(3010,007A)",TreatmentTechniqueNotes,Treatment Technique Notes,UT,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,007B)",PrescriptionNotes,Prescription Notes,UT,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,007F)",FractionationNotes,Fractionation Notes,UT,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,0081)",PrescriptionNotesSequence,Prescription Notes Sequence,SQ,Z,,,,,,,C,,,free_text,PS3.15
+"(3010,0085)",IntendedFractionStartTime,Intended Fraction Start Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(4000,0010)",Arbitrary,Arbitrary,LT,X,,,,,,,,,,other,PS3.15
+"(4000,4000)",TextComments,Text Comments,LT,X,,,,,,,,,,other,PS3.15
+"(4008,0040)",ResultsID,Results ID,SH,X,,,,,,,,,,other,PS3.15
+"(4008,0042)",ResultsIDIssuer,Results ID Issuer,LO,X,,,,,,,,,,other,PS3.15
+"(4008,0100)",InterpretationRecordedDate,Interpretation Recorded Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(4008,0101)",InterpretationRecordedTime,Interpretation Recorded Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(4008,0102)",InterpretationRecorder,Interpretation Recorder,PN,X,,,,,,,,,,staff,PS3.15
+"(4008,0108)",InterpretationTranscriptionDate,Interpretation Transcription Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(4008,0109)",InterpretationTranscriptionTime,Interpretation Transcription Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(4008,010A)",InterpretationTranscriber,Interpretation Transcriber,PN,X,,,,,,,,,,staff,PS3.15
+"(4008,010B)",InterpretationText,Interpretation Text,ST,X,,,,,,,C,,,free_text,PS3.15
+"(4008,010C)",InterpretationAuthor,Interpretation Author,PN,X,,,,,,,,,,staff,PS3.15
+"(4008,0111)",InterpretationApproverSequence,Interpretation Approver Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(4008,0112)",InterpretationApprovalDate,Interpretation Approval Date,DA,X,,,,,K,C,,,,dates,PS3.15
+"(4008,0113)",InterpretationApprovalTime,Interpretation Approval Time,TM,X,,,,,K,C,,,,dates,PS3.15
+"(4008,0114)",PhysicianApprovingInterpretation,Physician Approving Interpretation,PN,X,,,,,,,,,,staff,PS3.15
+"(4008,0115)",InterpretationDiagnosisDescription,Interpretation Diagnosis Description,LT,X,,,,,,,C,,,free_text,PS3.15
+"(4008,0118)",ResultsDistributionListSequence,Results Distribution List Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(4008,0119)",DistributionName,Distribution Name,PN,X,,,,,,,,,,staff,PS3.15
+"(4008,011A)",DistributionAddress,Distribution Address,LO,X,,,,,,,,,,other,PS3.15
+"(4008,0200)",InterpretationID,Interpretation ID,SH,X,,,,,,,,,,other,PS3.15
+"(4008,0202)",InterpretationIDIssuer,Interpretation ID Issuer,LO,X,,,,,,,,,,other,PS3.15
+"(4008,0300)",Impressions,Impressions,ST,X,,,,,,,C,,,free_text,PS3.15
+"(4008,4000)",ResultsComments,Results Comments,ST,X,,,,,,,C,,,free_text,PS3.15
+"(50xx,xxxx)",,Curve Data,,X,,,,,,,,,C,curves_overlays,PS3.15
+"(60xx,3000)",,Overlay Data,,X,,,,,,,,,C,curves_overlays,PS3.15
+"(60xx,4000)",,Overlay Comments,,X,,,,,,,,,C,curves_overlays,PS3.15
+"(FFFA,FFFA)",DigitalSignaturesSequence,Digital Signatures Sequence,SQ,X,,,,,,,,,,other,PS3.15
+"(FFFC,FFFC)",DataSetTrailingPadding,Data Set Trailing Padding,OB,X,,,,,,,,,,other,PS3.15

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dicompseudo"
+version = "0.1.0"
+description = "Configurable pseudonymisation of DICOM files based on DICOM PS3.15 Annex E"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Katya Stansfield" }]
+dependencies = ["pydicom>=3.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+dicompseudo = "dicompseudo.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dicompseudo = ["data/*.csv", "data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
