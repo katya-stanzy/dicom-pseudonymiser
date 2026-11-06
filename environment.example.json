@@ -1,0 +1,32 @@
+{
+  "input_dir": "D:/study/raw_dicom",
+  "output_dir": "D:/study/pseudo_dicom",
+  "mapping_file": "D:/study/keys/participants.csv",
+  "match_participant_by": "folder",
+  "replace": {
+    "PatientName": "nickname",
+    "PatientID": "experimental_number"
+  },
+  "categories": {
+    "identity": true,
+    "age": true,
+    "sex": true,
+    "body_measurements": true,
+    "contact": true,
+    "medical_social": true,
+    "institution": true,
+    "staff": true,
+    "all_person_names": true,
+    "identifiers": true,
+    "private_tags": true,
+    "curves_overlays": true
+  },
+  "dates": "shift",
+  "uids": "regenerate",
+  "free_text": "remove",
+  "keep_tags": [],
+  "extra_remove_tags": [],
+  "on_burned_in_annotation": "flag",
+  "workers": 4,
+  "overwrite": false
+}

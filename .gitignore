@@ -1,0 +1,33 @@
+# ---- Personal / study data: never commit ----
+*.dcm
+*.DCM
+*.ima
+*.IMA
+DICOMDIR
+*.nii
+*.nii.gz
+*.nrrd
+data_raw/
+data_out/
+keys/
+participants*.csv
+mapping*.csv
+audit*/
+# real settings (the template environment.example.json IS committed)
+environment.json
+.env
+
+# notebooks can carry header values in their outputs
+*.ipynb
+.ipynb_checkpoints/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.coverage
