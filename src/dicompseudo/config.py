@@ -64,7 +64,32 @@ class Config:
 
     @property
     def needs_salt(self) -> bool:
-        return self.uids == "regenerate" or self.dates == "shift"
+        """Salt needed regardless of the mapping (UID regeneration)."""
+        return self.uids == "regenerate"
+
+    def check_salt(self, mapping) -> None:
+        """Require the salt only where it is used.
+
+        - uids = "regenerate": always.
+        - dates = "shift": only for participants without date_shift_days in the mapping
+          (their shift is derived from the salt). If every participant has one, no salt.
+        """
+        if self.salt:
+            return
+        reasons = []
+        if self.uids == "regenerate":
+            reasons.append("uids='regenerate'")
+        if self.dates == "shift":
+            n = sum(1 for p in mapping.participants() if p.date_shift_days is None)
+            if n:
+                reasons.append(f"dates='shift' and {n} participant(s) have no date_shift_days "
+                               f"in the mapping file")
+        if reasons:
+            raise ConfigError(
+                "a secret salt is needed (" + "; ".join(reasons) + "): set the environment "
+                f"variable {SALT_ENV} (keep it with the mapping file, never in environment.json). "
+                "Alternatives: \"uids\": \"keep\", and a date_shift_days value for every "
+                "participant or \"dates\": \"keep\"/\"year_only\"/\"remove\".")
 
     def check_paths(self) -> None:
         """Refuse folder layouts that could overwrite input or leak the audit log."""
@@ -181,8 +206,8 @@ def from_dict(d: dict, *, require_paths: bool = True, salt: str | None = None) -
     cfg.salt = salt if salt is not None else os.environ.get(SALT_ENV)
     if cfg.needs_salt and not cfg.salt:
         raise ConfigError(
-            f"uids='regenerate' or dates='shift' needs a secret salt: set the environment "
-            f"variable {SALT_ENV} (keep it with the mapping file, never in environment.json)")
+            f"uids='regenerate' needs a secret salt: set the environment variable {SALT_ENV} "
+            f"(keep it with the mapping file, never in environment.json), or set \"uids\": \"keep\"")
     return cfg
 
 

@@ -78,7 +78,7 @@ See `environment.example.json`. Copy it to `environment.json`, which git ignores
 }
 ```
 
-The mapping file is a CSV with the columns `source_key, experimental_number, nickname[, date_shift_days]`. `source_key` holds the folder name or the original PatientID, whichever `match_participant_by` says. The secret salt for UIDs and random date shifts is set through an environment variable (`DICOMPSEUDO_SALT`) and is never written into the JSON file.
+The mapping file is a CSV with the columns `source_key, experimental_number, nickname[, date_shift_days]`. `source_key` holds the folder name or the original PatientID, whichever `match_participant_by` says. The secret salt is set through an environment variable (`DICOMPSEUDO_SALT`) and is never written into the JSON file. It is required only for `"uids": "regenerate"`, and for `"dates": "shift"` when a participant has no `date_shift_days` in the mapping.
 
 ## 4. Command-line interface
 

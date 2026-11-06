@@ -17,10 +17,48 @@ def test_example_settings_file_is_valid(tmp_path):
     assert cfg.dates == "shift" and cfg.categories["institution"]
 
 
-def test_salt_required_for_shift_or_regenerate():
-    with pytest.raises(ConfigError, match="DICOMPSEUDO_SALT"):
-        from_dict({"dates": "shift"}, require_paths=False, salt="")
-    from_dict({"dates": "keep", "uids": "keep"}, require_paths=False, salt="")
+ROWS_ALL_SHIFTS = [{"source_key": "a", "experimental_number": "1", "nickname": "x",
+                    "date_shift_days": "-30"},
+                   {"source_key": "b", "experimental_number": "2", "nickname": "y",
+                    "date_shift_days": "0"}]
+ROWS_ONE_MISSING = [ROWS_ALL_SHIFTS[0],
+                    {"source_key": "b", "experimental_number": "2", "nickname": "y"}]
+
+
+def test_salt_always_required_for_uid_regeneration():
+    with pytest.raises(ConfigError, match="uids='regenerate'"):
+        from_dict({"uids": "regenerate", "dates": "keep"}, require_paths=False, salt="")
+
+
+def test_salt_not_needed_when_every_participant_has_a_shift():
+    cfg = from_dict({"uids": "keep", "dates": "shift"}, require_paths=False, salt="")
+    cfg.check_salt(Mapping.from_rows(ROWS_ALL_SHIFTS))            # no error
+
+
+def test_salt_needed_when_a_shift_is_missing():
+    cfg = from_dict({"uids": "keep", "dates": "shift"}, require_paths=False, salt="")
+    with pytest.raises(ConfigError, match="1 participant"):
+        cfg.check_salt(Mapping.from_rows(ROWS_ONE_MISSING))
+    cfg.salt = "s"
+    cfg.check_salt(Mapping.from_rows(ROWS_ONE_MISSING))           # salt given: fine
+
+
+@pytest.mark.parametrize("dates", ["keep", "year_only", "remove"])
+def test_no_salt_needed_without_shift_or_regeneration(dates):
+    cfg = from_dict({"uids": "keep", "dates": dates}, require_paths=False, salt="")
+    cfg.check_salt(Mapping.from_rows(ROWS_ONE_MISSING))
+
+
+def test_engine_refuses_derived_shift_without_salt():
+    from dicompseudo.engine import Pseudonymiser
+    from dicompseudo.mapping import Participant
+    import make_synthetic as syn
+    cfg = from_dict({"uids": "keep", "dates": "shift"}, require_paths=False, salt="")
+    with pytest.raises(ValueError, match="needs a salt"):
+        Pseudonymiser(cfg).process(syn.synthetic_dataset(), Participant("a", "1", "x"))
+    ds = syn.synthetic_dataset()
+    Pseudonymiser(cfg).process(ds, Participant("a", "1", "x", 0))
+    assert ds.StudyDate == "20240310"                              # shift 0 = real dates
 
 
 @pytest.mark.parametrize("bad, msg", [

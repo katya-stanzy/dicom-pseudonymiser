@@ -18,7 +18,7 @@ If `conda activate` doesn't work in PowerShell, run `conda init powershell` once
 
 1. **Test on a copy:** copy 2–3 participants' folders to, e.g., `D:\dicom_test\input\`. Create `D:\dicom_test\keys\participants.csv`, where `source_key` must equal each folder name exactly.
 2. **Settings:** run `copy environment.example.json environment.json`, then `notepad environment.json`. Set `input_dir`, `output_dir`, `mapping_file` and `audit_dir`, using **forward slashes** (`D:/dicom_test/input`) or doubled backslashes. Set `"workers": 1` for the first run. `environment.json` is git-ignored.
-3. **Salt:** run `$env:DICOMPSEUDO_SALT = "long-random-phrase"`. Do this in **every new window**, because it is lost when the window closes. Use the **same salt every time** for the same study: with a different salt, dates shift differently and UIDs no longer link up across runs. Store it privately with the key file.
+3. **Salt (if needed):** run `$env:DICOMPSEUDO_SALT = "long-random-phrase"`. It is needed only for `"uids": "regenerate"` (the default), or for `"dates": "shift"` when a participant has no `date_shift_days` in the CSV (see [Dates, birth dates and the salt](#dates-birth-dates-and-the-salt)). `dicompseudo validate` tells you whether it is needed. Set it in **every new window**, because it is lost when the window closes. Use the **same salt every time** for the same study: with a different salt, dates shift differently and UIDs no longer link up across runs. Store it privately with the key file.
 4. **Run, in order:**
 
 ```powershell
@@ -58,7 +58,7 @@ The folder name doesn't need to contain the experimental number: the number and 
 2. Create `participants.csv` **outside this repository**, with the columns
    `source_key,experimental_number,nickname[,date_shift_days]`.
    `source_key` is the participant's folder name inside `input_dir` (or their original PatientID if `"match_participant_by": "PatientID"`).
-3. Set a secret salt. It is needed for UID regeneration and date shifting, so keep it with the mapping file:
+3. If needed, set the secret salt. It is needed for UID regeneration, and for date shifts that are not given in the CSV:
    - PowerShell: `$env:DICOMPSEUDO_SALT = "long-random-secret"`
    - bash: `export DICOMPSEUDO_SALT=long-random-secret`
 4. Run:
@@ -72,6 +72,43 @@ dicompseudo check <output_dir> --config environment.json --mapping <participants
 ```
 
 `--terms` takes a private text file with one word per line: real names, the lab's name, the town and so on. `check` reports where a term was found by its line number, never the word itself.
+
+## Dates, birth dates and the salt
+
+**What the salt is:** a secret phrase that only you know. The tool mixes it into its calculations, so that new UIDs and date shifts cannot be recalculated from the original data by anyone else. It never decides *which* dates are kept; the settings below do.
+
+**When it is needed:**
+
+| Setting | Salt needed? |
+|---|---|
+| `"uids": "regenerate"` (default) | **yes**, always |
+| `"uids": "keep"` | no (but the original UIDs stay in the files) |
+| `"dates": "shift"` and a participant has **no** `date_shift_days` in the CSV | **yes** (their shift is derived from the salt) |
+| `"dates": "shift"` and **every** participant has a `date_shift_days` | no |
+| `"dates": "keep"`, `"year_only"` or `"remove"` | no |
+
+`dicompseudo validate` prints `salt: set` or `salt: not set (not needed with these settings)`, plus how many shifts come from the CSV and how many from the salt.
+
+**Choosing dates for a study:**
+
+| Research needs | Settings |
+|---|---|
+| Real scan dates **and** real birth dates | `"dates": "keep"`, `"categories": {"age": false}` |
+| Exact age at scan and intervals, but hidden calendar dates | `"dates": "shift"`, `"categories": {"age": false}`. The birth date moves by the same number of days as the scans. |
+| Your own shift per participant | add `date_shift_days` to `participants.csv` (e.g. `-412`). `0` keeps that participant's real dates. |
+| Only the year | `"dates": "year_only"` (dates become `YYYY0101`) |
+| No dates at all | `"dates": "remove"` |
+| A few specific dates only | `"keep_tags": ["PatientBirthDate", "StudyDate"]`, together with `"dates": "keep"` or `"remove"`. With `"shift"`, the kept dates would be real and the rest shifted. |
+
+Example `participants.csv` with your own shifts:
+
+```
+source_key,experimental_number,nickname,date_shift_days
+Erika_Testperson,JRF001,Owl,0
+003,JRF003,Fox,-412
+```
+
+**Caution:** real birth dates together with real scan dates make people far easier to re-identify than names alone. Make sure your ethics approval and data agreement allow it, and keep such outputs as restricted as the key file.
 
 ## Keep private, never share with the output
 

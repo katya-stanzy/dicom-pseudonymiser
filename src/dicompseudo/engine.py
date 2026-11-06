@@ -84,8 +84,12 @@ class Pseudonymiser:
         rep.burned_in = self.burned_in_status(ds)
         shift = None
         if self.cfg.dates == "shift":
-            shift = (participant.date_shift_days if participant.date_shift_days is not None
-                     else derived_shift(self.cfg.salt or "", participant.experimental_number))
+            if participant.date_shift_days is not None:
+                shift = participant.date_shift_days
+            elif self.cfg.salt:
+                shift = derived_shift(self.cfg.salt, participant.experimental_number)
+            else:
+                raise ValueError("dates='shift' without date_shift_days needs a salt")
             rep.date_shift_days = shift
         old_sop = str(ds.get("SOPInstanceUID", "") or "")
 

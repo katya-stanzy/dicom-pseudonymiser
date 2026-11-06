@@ -160,6 +160,7 @@ def _place(res: FileResult, out: Path, claimed: set[str], overwrite: bool) -> No
 
 def run(cfg: Config, mapping: Mapping, progress=None) -> RunResult:
     cfg.check_paths()
+    cfg.check_salt(mapping)
     out = cfg.output_dir
     out.mkdir(parents=True, exist_ok=True)
     if not cfg.overwrite and any(p.name != STAGING for p in out.iterdir()):

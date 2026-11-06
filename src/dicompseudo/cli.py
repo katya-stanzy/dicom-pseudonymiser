@@ -25,6 +25,8 @@ def _load(args, *, need_salt: bool):
     salt = None if need_salt else (os.environ.get(SALT_ENV) or "not-needed")
     cfg = load(args.config, salt=salt)
     mapping = Mapping.load(cfg.mapping_file)
+    if need_salt:
+        cfg.check_salt(mapping)
     return cfg, mapping
 
 
@@ -58,6 +60,11 @@ def cmd_validate(args) -> int:
     print(f"dates={cfg.dates}  uids={cfg.uids}  free_text={cfg.free_text}  "
           f"burned_in={cfg.on_burned_in_annotation}  workers={cfg.workers}")
     print(f"keep_tags: {len(cfg.keep_tags)}  extra_remove_tags: {len(cfg.extra_remove_tags)}")
+    if cfg.dates == "shift":
+        n_own = sum(1 for p in mapping.participants() if p.date_shift_days is not None)
+        print(f"date shift: {n_own} participant(s) from date_shift_days, "
+              f"{len(mapping) - n_own} derived from the salt")
+    print(f"salt      : {'set' if cfg.salt else 'not set (not needed with these settings)'}")
     print("OK")
     return 0
 
