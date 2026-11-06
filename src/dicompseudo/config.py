@@ -46,6 +46,7 @@ class Config:
     input_dir: Path | None = None
     output_dir: Path | None = None
     mapping_file: Path | None = None
+    audit_dir: Path | None = None          # default: <mapping_file folder>/dicompseudo_audit
     match_participant_by: str = "folder"
     replace: dict[str, str] = field(
         default_factory=lambda: {"PatientName": "nickname", "PatientID": "experimental_number"})
@@ -63,6 +64,21 @@ class Config:
     @property
     def needs_salt(self) -> bool:
         return self.uids == "regenerate" or self.dates == "shift"
+
+    def check_paths(self) -> None:
+        """Refuse folder layouts that could overwrite input or leak the audit log."""
+        def inside(a: Path, b: Path) -> bool:
+            a, b = a.resolve(), b.resolve()
+            return a == b or b in a.parents
+        if not self.input_dir or not self.input_dir.is_dir():
+            raise ConfigError(f"input_dir does not exist: {self.input_dir}")
+        if inside(self.output_dir, self.input_dir) or inside(self.input_dir, self.output_dir):
+            raise ConfigError("output_dir and input_dir must not contain each other")
+        if inside(self.audit_dir, self.output_dir):
+            raise ConfigError("audit_dir must not be inside output_dir (the audit log lists "
+                              "original paths and must stay private)")
+        if self.mapping_file and inside(self.mapping_file, self.output_dir):
+            raise ConfigError("mapping_file must not be inside output_dir")
 
 
 def parse_tag(text: str) -> int:
@@ -90,7 +106,7 @@ def _choice(d: dict, key: str, options: tuple, default):
 def from_dict(d: dict, *, require_paths: bool = True, salt: str | None = None) -> Config:
     if not isinstance(d, dict):
         raise ConfigError("environment.json must contain a JSON object")
-    known = {"input_dir", "output_dir", "mapping_file", "match_participant_by", "replace",
+    known = {"input_dir", "output_dir", "mapping_file", "audit_dir", "match_participant_by", "replace",
              "categories", "dates", "uids", "free_text", "keep_tags", "extra_remove_tags",
              "on_burned_in_annotation", "workers", "overwrite"}
     unknown = set(d) - known
@@ -103,6 +119,11 @@ def from_dict(d: dict, *, require_paths: bool = True, salt: str | None = None) -
             setattr(cfg, key, Path(d[key]))
         elif require_paths:
             raise ConfigError(f"'{key}' is required")
+
+    if d.get("audit_dir"):
+        cfg.audit_dir = Path(d["audit_dir"])
+    elif cfg.mapping_file:
+        cfg.audit_dir = cfg.mapping_file.parent / "dicompseudo_audit"
 
     cfg.match_participant_by = _choice(d, "match_participant_by", MATCH_MODES, "folder")
 

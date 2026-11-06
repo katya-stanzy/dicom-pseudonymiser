@@ -2,6 +2,7 @@
   "input_dir": "D:/study/raw_dicom",
   "output_dir": "D:/study/pseudo_dicom",
   "mapping_file": "D:/study/keys/participants.csv",
+  "audit_dir": "D:/study/keys/dicompseudo_audit",
   "match_participant_by": "folder",
   "replace": {
     "PatientName": "nickname",

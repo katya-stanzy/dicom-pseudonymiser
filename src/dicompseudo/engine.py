@@ -266,11 +266,23 @@ class Pseudonymiser:
             "keep": "UNMODIFIED", "shift": "MODIFIED",
             "year_only": "MODIFIED", "remove": "REMOVED"}[cfg.dates]
 
-    @staticmethod
-    def _fix_file_meta(ds: Dataset, old_sop: str) -> None:
+    # file meta (group 0002): AE titles can name the site, private info the vendor
+    FILE_META_SITE = (0x00020016, 0x00020017, 0x00020018)  # Source/Sending/Receiving AE
+    FILE_META_PRIVATE = (0x00020100, 0x00020102)            # Private Information (Creator)
+
+    def _fix_file_meta(self, ds: Dataset, old_sop: str) -> None:
         fm = getattr(ds, "file_meta", None)
         if fm is None:
             return
+        cats = self.cfg.categories
+        if cats["institution"] or cats["device"]:
+            for t in self.FILE_META_SITE:
+                if t in fm:
+                    del fm[t]
+        if cats["private_tags"]:
+            for t in self.FILE_META_PRIVATE:
+                if t in fm:
+                    del fm[t]
         new_sop = str(ds.get("SOPInstanceUID", "") or "")
         if "MediaStorageSOPInstanceUID" in fm and new_sop and new_sop != old_sop:
             fm.MediaStorageSOPInstanceUID = new_sop

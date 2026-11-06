@@ -44,7 +44,8 @@ After processing, the tool sets `PatientIdentityRemoved = YES` (0012,0062) and r
 
 ### Known limits, handled explicitly
 - **Text burned into the pixels:** ultrasound and some X-ray and secondary-capture images print the name or date into the image itself. The tool reads `BurnedInAnnotation` (0028,0301) and the modality. The `on_burned_in_annotation` setting can be `flag`, `skip` or `allow`. Masking pixel regions is planned for phase 2.
-- **File and folder names** often contain names. Outputs are always written as `<experimental_number>/<series_no>/<instance_no>.dcm`, so original file names never reach the output.
+- **File and folder names** often contain names. Outputs are always written as `<experimental_number>/study_<hash8>/<SeriesNumber>_<Modality>/<InstanceNumber>.dcm`, so original file names never reach the output. Duplicate names get a `_1`, `_2` suffix, and DICOMDIR files are never copied.
+- **The file meta header** (group 0002) is cleaned too. Source, sending and receiving AE titles can name the site.
 - **Nested sequences:** every rule applies recursively inside sequences.
 
 ## 3. `environment.json` (settings, set up before running)
@@ -56,6 +57,7 @@ See `environment.example.json`. Copy it to `environment.json`, which git ignores
   "input_dir":  "D:/study/raw_dicom",
   "output_dir": "D:/study/pseudo_dicom",
   "mapping_file": "D:/study/keys/participants.csv",   // outside the repo!
+  "audit_dir": "D:/study/keys/dicompseudo_audit",     // private: lists original paths
   "match_participant_by": "folder",                   // "folder" | "PatientID"
   "replace": { "PatientName": "nickname", "PatientID": "experimental_number" },
   "categories": {
@@ -84,9 +86,11 @@ The mapping file is a CSV with the columns `source_key, experimental_number, nic
 dicompseudo validate --config environment.json   # check settings + mapping, no files written
 dicompseudo inspect  --config environment.json   # list which sensitive TAGS are present (counts only, no values)
 dicompseudo run      --config environment.json   # pseudonymise -> output_dir + audit log
-dicompseudo check    <output_dir> [--mapping participants.csv]
-        # leak scan: any remaining tag from the rule table, any PN value, any mapped original
-        # name/ID found in any text element or path. Reports tag names + counts only.
+dicompseudo check    <output_dir> [--config environment.json] [--mapping participants.csv] [--terms words.txt]
+        # leak scan: any remaining tag the settings should have removed, any PN value, private
+        # tags, overlays, file-meta AE titles, any original source_key or private term found
+        # (as a whole word) in a text element or output path. Reports tag names, mapping row
+        # numbers, terms line numbers and counts only. Exit status 1 when a leak is found.
 ```
 
 ## 5. Package layout
@@ -107,6 +111,7 @@ dicom-pseudonymiser/
 │   ├── dates.py                # keep / remove / year_only / shift
 │   ├── uids.py                 # deterministic UID regeneration (salted hash → 2.25.<int>)
 │   ├── io.py                   # find DICOMs (by preamble, not extension), parallel processing, safe writing
+│   ├── survey.py               # `inspect`: sensitive tags + device signatures, counts only
 │   ├── check.py                # leak scan
 │   ├── audit.py                # per-run log: config hash, version, tag actions + counts (no values)
 │   └── data/ps315_annexE.csv
@@ -119,12 +124,12 @@ dicom-pseudonymiser/
 
 | Step | What | Done when |
 |---|---|---|
-| 1 | Set up the repo, `pyproject.toml`, `environment.yml`, `.gitignore` | `conda env create` works and `dicompseudo --help` runs |
-| 2 | Build the rule table from PS3.15 Annex E and assign categories | the CSV is versioned and every row has a category |
-| 3 | Write `config.py` and `mapping.py` with validation | bad JSON or a missing participant gives a clear message |
-| 4 | Port `engine.py` from `anonymise.py` (PN sweep, private tags, curves) and add the categories, dates and UIDs | the synthetic tests pass |
-| 5 | Add `io.py`: walk folders, run in parallel, use new output names, never overwrite the input | input folder unchanged, output tree in the new layout |
-| 6 | Add `check.py` and `audit.py` | `check` finds deliberately planted leaks in the synthetic data |
+| 1 ✅ | Set up the repo, `pyproject.toml`, `environment.yml`, `.gitignore` | `conda env create` works and `dicompseudo --help` runs |
+| 2 ✅ | Build the rule table from PS3.15 Annex E and assign categories | the CSV is versioned and every row has a category |
+| 3 ✅ | Write `config.py` and `mapping.py` with validation | bad JSON or a missing participant gives a clear message |
+| 4 ✅ | Port `engine.py` from `anonymise.py` (PN sweep, private tags, curves) and add the categories, dates and UIDs | the synthetic tests pass |
+| 5 ✅ | Add `io.py`: walk folders, run in parallel, use new output names, never overwrite the input; `survey.py` for `inspect` | input folder unchanged, output tree in the new layout |
+| 6 ✅ | Add `check.py` and `audit.py` | `check` finds deliberately planted leaks in the synthetic data |
 | 7 | Dry run on real data, run locally by Katya: `inspect`, then `run`, then `check` | `check` reports 0 leaks, and spot checks in Slicer still load correctly |
 | 8 | Write the README with a quick start | a colleague can run it from the README alone |
 | Phase 2 | Pixel masking for burned-in text (per-modality regions), an optional GUI | — |
